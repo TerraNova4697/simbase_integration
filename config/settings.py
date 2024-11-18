@@ -1,5 +1,6 @@
 import logging
 import os
+from time import sleep
 
 from dotenv import load_dotenv
 
@@ -23,16 +24,23 @@ class Settings:
         self.DEBUG = bool(int(os.environ.get('DEBUG')))
         self.TEST = bool(int(os.environ.get("TEST")))
         self.PROD = False if self.DEBUG else bool(int(os.environ.get('PROD')))
+        self.logger = self.config_log()
         if not self.DEBUG and not self.TEST and self.PROD:
             self.ENVIRONMENT = 'PROD'
-            print("\033[92m {}\033[00m".format("Running in production mode..."))
+            self.logger.info("Running in production mode...")
         elif self.TEST:
             self.ENVIRONMENT = 'TEST'
-            print("\033[92m {}\033[00m".format('Running in testing mode...'))
+            self.logger.info('Running in testing mode...')
+            if self.DB_ADDRESS != 'localhost':
+                print("\033[91m {}\033[00m".format('You are using non-local databasse. I am waiting 10 seconds to proceed'))
+                sleep(10)
         else:
             self.ENVIRONMENT = 'DEVELOPMENT'
-            print("\033[92m {}\033[00m".format('Running in development mode...'))
-            print("\033[92m {}\033[00m".format("If you want to run in production, you must set TEST and DEBUG to '0'"))
+            self.logger.info('Running in development mode...')
+            self.logger.info("If you want to run in production, you must set TEST and DEBUG to '0'")
+            if self.DB_ADDRESS != 'localhost':
+                print("\033[91m {}\033[00m".format('You are using non-local databasse. I am waiting 10 seconds to proceed'))
+                sleep(10)
 
     @property
     def database_url(self):
@@ -81,5 +89,6 @@ class Settings:
             logger.setLevel(logging.DEBUG)
         else:
             logger.setLevel(logging.INFO)
+        return logger
 
 settings = Settings()

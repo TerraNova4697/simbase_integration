@@ -6,7 +6,6 @@ from tb_gateway_mqtt import TBGatewayMqttClient
 from config.settings import settings
 from connectors.hytera_connector import HyteraConnector
 from database.queries.db_ops import DataBaseOpsORM
-from database.queries.gps_orm import GpsORM
 from destination.mqtt_client import CubaMqttClient
 
 
@@ -26,7 +25,7 @@ async def main():
 if __name__ == '__main__':
     settings.config_log()
 
-    DataBaseOpsORM.delete_all_gps_records()
+    # DataBaseOpsORM.delete_all_gps_records()
 
     try:
         asyncio.run(main())

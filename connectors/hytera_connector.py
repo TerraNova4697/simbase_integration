@@ -1,8 +1,13 @@
 import asyncio
 from datetime import datetime, timedelta
+import logging
 
+from config.settings import settings
 from database.queries.gps_orm import GpsORM
 from destination.mqtt_client import CubaMqttClient
+
+
+logger = logging.getLogger(settings.LOGGER)
 
 
 class HyteraConnector:
@@ -18,17 +23,17 @@ class HyteraConnector:
         start = datetime.now() - timedelta(minutes=minutes, seconds=seconds)
         while True:
             end = datetime.now()
-            print(f"Start loop at {start} end at {end}")
+            logger.info(f"Start loop at {start} end at {end}")
             telemetry = await self.form_telemetry_grouped_by_name(start, end)
             for device_name, telemetry_pack in telemetry.items():
                 self.destination.send_data_pack(device_name, telemetry_pack)
             start = end
             next_iteration = start + timedelta(minutes=minutes, seconds=seconds)
             wait_time = (next_iteration - datetime.now()).seconds
-            print(type(wait_time))
+            logger.info(type(wait_time))
             if wait_time > 0:
-                print(f"End loop. Wait {wait_time} seconds")
-                print('--------------------------------')
+                logger.info(f"End loop. Wait {wait_time} seconds")
+                logger.info('--------------------------------')
                 await asyncio.sleep(wait_time)
 
     @staticmethod
