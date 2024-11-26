@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from config.settings import settings
 
 
-engine = create_engine(settings.database_url)
+engine = create_engine(settings.database_url, connect_args={'options': '-csearch_path=dbo'})
 
 session_factory = sessionmaker(bind=engine)
 

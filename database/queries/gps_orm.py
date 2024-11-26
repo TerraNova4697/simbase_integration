@@ -12,7 +12,21 @@ class GpsORM:
     def get_all_data_within_period(start_time: datetime, end_time: datetime):
         with session_factory() as session:
             query = (
-                select(DeviceTelemetry)
+                select(
+                    DeviceTelemetry.device_id,
+                    DeviceTelemetry.device_alias,
+                    DeviceTelemetry.device_type,
+                    DeviceTelemetry.gps_datetime,
+                    DeviceTelemetry.longitude,
+                    DeviceTelemetry.latitude,
+                    DeviceTelemetry.speed,
+                    DeviceTelemetry.direction,
+                    DeviceTelemetry.receive_datetime,
+                    DeviceTelemetry.rssi_up,
+                    DeviceTelemetry.rssi_down,
+                    DeviceTelemetry.power_mode,
+                    DeviceTelemetry.electricity
+                )
                 .where(
                     and_(
                         and_(
