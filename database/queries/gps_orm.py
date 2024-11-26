@@ -70,4 +70,4 @@ class GpsORM:
                     )
                 )
             )
-            return session.execute(query).scalars().all()
+            return session.execute(query).all()

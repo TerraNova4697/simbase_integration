@@ -8,6 +8,7 @@ from database.database import Base
 
 class DeviceTelemetry(Base):
     __tablename__ = 'gps_location_data_base'
+    __table_args__ = {"schema": "dbo"}
 
     guid: Mapped[str] = mapped_column(String(length=64), primary_key=True)
     puc_id: Mapped[str] = mapped_column(String(length=64))
