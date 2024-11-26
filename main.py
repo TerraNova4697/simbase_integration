@@ -17,8 +17,12 @@ async def main():
     )
     mqtt_client.connect()
     cuba_mqtt_client = CubaMqttClient(mqtt_client)
-    hytera_connector = HyteraConnector(cuba_mqtt_client)
-    await hytera_connector.run_monitoring()
+    hytera_connector_east = HyteraConnector(cuba_mqtt_client, source='east')
+    hytera_connector_west = HyteraConnector(cuba_mqtt_client, source='west')
+    await asyncio.gather(
+        hytera_connector_east.run_monitoring(),
+        hytera_connector_west.run_monitoring()
+    )
 
 
 if __name__ == '__main__':

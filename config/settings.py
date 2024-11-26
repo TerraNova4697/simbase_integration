@@ -13,7 +13,8 @@ class Settings:
     def __init__(self):
         self.DB_USERNAME = os.environ.get('DB_USERNAME')
         self.DB_PASSWORD = os.environ.get('DB_PASSWORD')
-        self.DB_ADDRESS = os.environ.get('DB_ADDRESS')
+        self.DB_ADDRESS_EAST = os.environ.get('DB_ADDRESS_EAST')
+        self.DB_ADDRESS_WEST = os.environ.get('DB_ADDRESS_WEST')
         self.DB_NAME = os.environ.get('DB_NAME')
         self.DB_PORT = os.environ.get('DB_PORT')
         self.LOGGER = os.environ.get('LOGGER')
@@ -43,8 +44,12 @@ class Settings:
                 sleep(10)
 
     @property
-    def database_url(self):
-        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
+    def database_url_east(self):
+        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS_EAST}:{self.DB_PORT}/{self.DB_NAME}"
+
+    @property
+    def database_url_west(self):
+        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS_WEST}:{self.DB_PORT}/{self.DB_NAME}"
 
     @property
     def is_development(self):

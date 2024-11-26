@@ -12,9 +12,10 @@ logger = logging.getLogger(settings.LOGGER)
 
 class HyteraConnector:
 
-    def __init__(self, destination):
+    def __init__(self, destination, source: str):
         self.gps_orm: GpsORM
         self.destination: CubaMqttClient = destination
+        self.source: str = source
 
     async def run_monitoring(self):
         await self.get_radiostations_state(seconds=60)
@@ -36,9 +37,8 @@ class HyteraConnector:
                 logger.info('--------------------------------')
                 await asyncio.sleep(wait_time)
 
-    @staticmethod
-    async def form_telemetry_grouped_by_name(start: datetime, end: datetime) -> dict[list]:
-        all_data = GpsORM.get_all_data_within_period(start, end)
+    async def form_telemetry_grouped_by_name(self, start: datetime, end: datetime) -> dict[list]:
+        all_data = GpsORM.get_all_data_within_period(start, end, self.source)
         formed_telemetry = {}
         for record in all_data:
             obj = {

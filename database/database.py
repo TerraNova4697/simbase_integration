@@ -6,9 +6,11 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from config.settings import settings
 
 
-engine = create_engine(settings.database_url, connect_args={'options': '-csearch_path=dbo'})
+engine_east = create_engine(settings.database_url_east, connect_args={'options': '-csearch_path=dbo'})
+engine_west = create_engine(settings.database_url_west, connect_args={'options': '-csearch_path=dbo'})
 
-session_factory = sessionmaker(bind=engine)
+session_factory_east = sessionmaker(bind=engine_east)
+session_factory_west = sessionmaker(bind=engine_west)
 
 
 class Base(DeclarativeBase):
