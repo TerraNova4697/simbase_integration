@@ -42,24 +42,22 @@ class HyteraConnector:
         formed_telemetry = {}
         for record in all_data:
             obj = {
-                "ts": int(datetime.timestamp(record.gps_datetime) * 1000),
+                "ts": int(datetime.timestamp(record[3]) * 1000),
                 "values": {
-                    "long_we": record.long_we,
-                    "longitude": float(record.longitude),
-                    "lat_ns": record.lat_ns,
-                    "latitude": float(record.latitude),
-                    "speed": float(record.speed),
-                    "direction": float(record.direction),
-                    "receive_datetime": int(datetime.timestamp(record.receive_datetime) * 1000),
-                    "rssi_up": record.rssi_up,
-                    "rssi_down": record.rssi_down,
-                    "power_mode": record.power_mode,
-                    "electricity": record.electricity
+                    "longitude": float(record[4]),
+                    "latitude": float(record[5]),
+                    "speed": float(record[6]),
+                    "direction": float(record[7]),
+                    "receive_datetime": int(datetime.timestamp(record[8]) * 1000),
+                    "rssi_up": record[9],
+                    "rssi_down": record[10],
+                    "power_mode": record[11],
+                    "electricity": record[12]
                 }
             }
-            if not formed_telemetry.get(record.device_id):
-                formed_telemetry[record.device_id] = [obj]
+            if not formed_telemetry.get(record[0]):
+                formed_telemetry[record[0]] = [obj]
             else:
-                formed_telemetry[record.device_id].append(obj)
+                formed_telemetry[record[0]].append(obj)
 
         return formed_telemetry

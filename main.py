@@ -24,11 +24,7 @@ async def main():
 if __name__ == '__main__':
     settings.config_log()
 
-    # DataBaseOpsORM.delete_all_gps_records()
-
     try:
-        # asyncio.run(main())
-        res = GpsORM.get_all_data_within_period(datetime.now(), datetime.now() - timedelta(minutes=1))
-        print(res)
+        asyncio.run(main())
     finally:
         end_ts = datetime.timestamp(datetime.now())
