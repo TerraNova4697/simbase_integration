@@ -28,6 +28,7 @@ if __name__ == '__main__':
 
     try:
         # asyncio.run(main())
-        GpsORM.get_all_data_within_period(datetime.now(), datetime.now() - timedelta(minutes=1))
+        res = GpsORM.get_all_data_within_period(datetime.now(), datetime.now() - timedelta(minutes=1))
+        print(res)
     finally:
         end_ts = datetime.timestamp(datetime.now())
