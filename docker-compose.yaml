@@ -1,0 +1,16 @@
+services:
+
+  app:
+    image: poc_radio:v0.0.1
+    container_name: poc_radio
+    env_file:
+      - .env
+    volumes:
+      - ./:/app
+      - dev-logs:/logs/
+    restart: always
+    command: >
+      sh -c "/py/bin/python main.py"
+
+volumes:
+  dev-logs:
