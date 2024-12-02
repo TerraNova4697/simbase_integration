@@ -6,11 +6,9 @@ from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from config.settings import settings
 
 
-engine_east = create_engine(settings.database_url_east, connect_args={'options': '-csearch_path=dbo'})
-engine_west = create_engine(settings.database_url_west, connect_args={'options': '-csearch_path=dbo'})
+engine = create_engine(settings.database_url)
 
-session_factory_east = sessionmaker(bind=engine_east)
-session_factory_west = sessionmaker(bind=engine_west)
+session_factory = sessionmaker(bind=engine)
 
 
 class Base(DeclarativeBase):
@@ -18,6 +16,10 @@ class Base(DeclarativeBase):
     repr_cols = tuple()
 
     def __repr__(self):
+        """
+        Defines how models will be displayed in logs.
+        :return:
+        """
         cols = []
         for idx, col in enumerate(self.__table__.columns.keys()):
             if col in self.repr_cols or idx < self.repr_cols_num:

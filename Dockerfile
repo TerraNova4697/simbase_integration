@@ -17,14 +17,14 @@ RUN python -m venv /py && \
     adduser \
         --disabled-password \
         --no-create-home \
-        radio-user && \
+        conn-user && \
     mkdir -p logs/ && \
     touch logs/development.log && \
     touch logs/test.log && \
     touch logs/prod.log && \
-    chown -R radio-user:radio-user logs && \
+    chown -R conn-user:conn-user logs && \
     chmod 755 logs
 
     ENV PATH="/py/bin:$PATH"
 
-    USER radio-user
+    USER conn-user

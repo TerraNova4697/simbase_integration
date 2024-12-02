@@ -4,12 +4,13 @@ from datetime import datetime, timedelta
 from tb_gateway_mqtt import TBGatewayMqttClient
 
 from config.settings import settings
-from connectors.hytera_connector import HyteraConnector
+from connectors.connector import Connector
 from database.queries.gps_orm import GpsORM
 from destination.mqtt_client import CubaMqttClient
 
 
 async def main():
+    # Создаем клиента, который будет отправлять данные на платформу. Клиент работает на основе TBGatewayMqttClient
     mqtt_client = TBGatewayMqttClient(
         settings.mqtt_url,
         int(settings.MQTT_PORT),
@@ -17,11 +18,14 @@ async def main():
     )
     mqtt_client.connect()
     cuba_mqtt_client = CubaMqttClient(mqtt_client)
-    hytera_connector_east = HyteraConnector(cuba_mqtt_client, source='east')
-    hytera_connector_west = HyteraConnector(cuba_mqtt_client, source='west')
+
+    # Коннектор, который будет собирать данные из конкретной БД и отправлять на платформу
+    # Таких коннекторов может быть сколько угодно.
+    connector = Connector(cuba_mqtt_client)
+
+    # Запуск корутин всех коннекторов
     await asyncio.gather(
-        hytera_connector_east.run_monitoring(),
-        hytera_connector_west.run_monitoring()
+        connector.run_monitoring()
     )
 
 

@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# DATABASE
+export DB_USERNAME=DB_USERNAME
+export DB_PASSWORD=DB_PASSWORD
+export DB_ADDRESS=DB_ADDRESS
+export DB_PORT=5432
+export DB_NAME=DB_NAME
+
+# ENVIRONMENT
+export DEBUG=1
+export PROD=0
+export TEST=0
+
+# LOGGER
+export LOGGER=LOGGER
+
+# MQTT_CLIENT
+export MQTT_URL=MQTT_URL # Ex: cloud.cubaiot.kz
+export MQTT_PORT=1883
+export GATEWAY_TOKEN=GATEWAY_TOKEN

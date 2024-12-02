@@ -13,8 +13,7 @@ class Settings:
     def __init__(self):
         self.DB_USERNAME = os.environ.get('DB_USERNAME')
         self.DB_PASSWORD = os.environ.get('DB_PASSWORD')
-        self.DB_ADDRESS_EAST = os.environ.get('DB_ADDRESS_EAST')
-        self.DB_ADDRESS_WEST = os.environ.get('DB_ADDRESS_WEST')
+        self.DB_ADDRESS = os.environ.get('DB_ADDRESS')
         self.DB_NAME = os.environ.get('DB_NAME')
         self.DB_PORT = os.environ.get('DB_PORT')
         self.LOGGER = os.environ.get('LOGGER')
@@ -32,24 +31,14 @@ class Settings:
         elif self.TEST:
             self.ENVIRONMENT = 'TEST'
             self.logger.info('Running in testing mode...')
-            if self.DB_ADDRESS_EAST != 'localhost' or self.DB_ADDRESS_WEST != 'localhost':
-                print("\033[91m {}\033[00m".format('You are using non-local databasse. I am waiting 10 seconds to proceed'))
-                sleep(10)
         else:
             self.ENVIRONMENT = 'DEVELOPMENT'
             self.logger.info('Running in development mode...')
             self.logger.info("If you want to run in production, you must set TEST and DEBUG to '0'")
-            if self.DB_ADDRESS_EAST != 'localhost' or self.DB_ADDRESS_WEST != 'localhost':
-                print("\033[91m {}\033[00m".format('You are using non-local databasse. I am waiting 10 seconds to proceed'))
-                sleep(10)
 
     @property
-    def database_url_east(self):
-        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS_EAST}:{self.DB_PORT}/{self.DB_NAME}"
-
-    @property
-    def database_url_west(self):
-        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS_WEST}:{self.DB_PORT}/{self.DB_NAME}"
+    def database_url(self):
+        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
 
     @property
     def is_development(self):
