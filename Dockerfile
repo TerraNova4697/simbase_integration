@@ -17,13 +17,7 @@ RUN python -m venv /py && \
     adduser \
         --disabled-password \
         --no-create-home \
-        conn-user && \
-    mkdir -p logs/ && \
-    touch logs/development.log && \
-    touch logs/test.log && \
-    touch logs/prod.log && \
-    chown -R conn-user:conn-user logs && \
-    chmod 755 logs
+        conn-user
 
     ENV PATH="/py/bin:$PATH"
 

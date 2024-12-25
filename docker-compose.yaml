@@ -1,13 +1,13 @@
 services:
 
   app:
-    image: poc_radio:v0.0.1
-    container_name: poc_radio
+    image: simbase_connector:0.1.0
+    container_name: simbase_connector
     env_file:
-      - env_example
+      - .env
     volumes:
       - ./:/app
-      - dev-logs:/logs/
+      - dev-logs:/logger/logs/
     restart: always
     command: >
       sh -c "/py/bin/python main.py"

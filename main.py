@@ -7,16 +7,17 @@ from config.settings import settings
 from connectors.connector import Connector
 from database.queries.gps_orm import GpsORM
 from destination.mqtt_client import CubaMqttClient
+from logger import logger
 
 
 async def main():
     # Создаем клиента, который будет отправлять данные на платформу. Клиент работает на основе TBGatewayMqttClient
     mqtt_client = TBGatewayMqttClient(
-        settings.mqtt_url,
+        settings.MQTT_URL,
         int(settings.MQTT_PORT),
-        settings.gateway_token
+        settings.GATEWAY_TOKEN
     )
-    mqtt_client.connect()
+    # mqtt_client.connect()
     cuba_mqtt_client = CubaMqttClient(mqtt_client)
 
     # Коннектор, который будет собирать данные из конкретной БД и отправлять на платформу
@@ -30,7 +31,6 @@ async def main():
 
 
 if __name__ == '__main__':
-    settings.config_log()
 
     try:
         asyncio.run(main())
