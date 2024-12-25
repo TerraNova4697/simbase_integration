@@ -28,8 +28,8 @@ class Connector:
             done_tasks, pending_tasks = await asyncio.wait(tasks, return_when=asyncio.FIRST_EXCEPTION)
 
             for task in done_tasks:
-                if task.exception():
-                    logger.error(f"Task {task} raised an exception: {task.exception()}")
+                if exc := task.exception():
+                    logger.error(f"Task {task} raised an exception: {exc}")
 
             for task in pending_tasks:
                 try:

@@ -28,7 +28,7 @@ class Settings(BaseSettings):
 
     @property
     def database_url(self):
-        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
 
     @property
     def is_prod(self):
