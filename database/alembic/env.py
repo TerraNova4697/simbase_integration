@@ -19,8 +19,9 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+# АЛЕМБИК ИСПОЛЬЗУЕТСЯ ТОЛЬКО В СРЕДЕ РАЗРАБОТКИ И НЕ ПРИМЕНЯЕТСЯ В ПРОДАКШН
 config.set_main_option(
-    "sqlalchemy.url", settings.database_url
+    "sqlalchemy.url", settings.development_database_url
 )
 
 

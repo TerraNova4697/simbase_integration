@@ -15,6 +15,13 @@ class Settings(BaseSettings):
     DB_NAME: str = Field(validation_alias='DB_NAME')
     DB_PORT: str = Field(validation_alias='DB_PORT')
 
+    # DEVELOPMENT DATABASE
+    DEVELOPMENT_DB_USERNAME: str = Field(validation_alias='DEVELOPMENT_DB_USERNAME')
+    DEVELOPMENT_DB_PASSWORD: str = Field(validation_alias='DEVELOPMENT_DB_PASSWORD')
+    DEVELOPMENT_DB_ADDRESS: str = Field(validation_alias='DEVELOPMENT_DB_ADDRESS')
+    DEVELOPMENT_DB_NAME: str = Field(validation_alias='DEVELOPMENT_DB_NAME')
+    DEVELOPMENT_DB_PORT: str = Field(validation_alias='DEVELOPMENT_DB_PORT')
+
     # LOGGER
     LOGGER: str = Field(validation_alias='LOGGER')
     LOG_LEVEL: str = Field(validation_alias='LOG_LEVEL')
@@ -29,6 +36,11 @@ class Settings(BaseSettings):
     @property
     def database_url(self):
         return f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
+
+    @property
+    def development_database_url(self):
+        return (f"mysql+pymysql://{self.DEVELOPMENT_DB_USERNAME}:{self.DEVELOPMENT_DB_PASSWORD}@"
+                f"{self.DEVELOPMENT_DB_ADDRESS}:{self.DEVELOPMENT_DB_PORT}/{self.DEVELOPMENT_DB_NAME}")
 
     @property
     def is_prod(self):
