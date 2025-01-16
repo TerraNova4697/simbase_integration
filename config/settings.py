@@ -35,11 +35,11 @@ class Settings(BaseSettings):
 
     @property
     def database_url(self):
-        return f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
 
     @property
     def development_database_url(self):
-        return (f"mysql+pymysql://{self.DEVELOPMENT_DB_USERNAME}:{self.DEVELOPMENT_DB_PASSWORD}@"
+        return (f"postgresql://{self.DEVELOPMENT_DB_USERNAME}:{self.DEVELOPMENT_DB_PASSWORD}@"
                 f"{self.DEVELOPMENT_DB_ADDRESS}:{self.DEVELOPMENT_DB_PORT}/{self.DEVELOPMENT_DB_NAME}")
 
     @property
