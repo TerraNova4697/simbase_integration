@@ -9,5 +9,15 @@ class ObjectOrm:
     @staticmethod
     def insert_object(**kwargs):
         with session_factory() as session:
-            session.add(Object(**kwargs))
+            obj = Object(**kwargs)
+            session.add(obj)
             session.commit()
+            return obj
+        
+    @staticmethod
+    def get_all():
+        with session_factory() as session:
+            query = (
+                select(Object)
+            )
+            return session.execute(query).scalars().all()

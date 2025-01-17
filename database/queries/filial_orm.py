@@ -37,5 +37,5 @@ class FilialOrm:
             query = (
                 select(Filial).filter(Filial.id_sb_object_filial == filial_sb_id)
             )
-            return session.execute(query).scalars().all()
+            return session.execute(query).scalars().first()
         
