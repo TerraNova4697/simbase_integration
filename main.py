@@ -9,6 +9,7 @@ from database.queries.gps_orm import GpsORM
 from destination.mqtt_client import CubaMqttClient
 from logger import logger
 
+from mock import mock
 
 async def main():
     # Создаем клиента, который будет отправлять данные на платформу. Клиент работает на основе TBGatewayMqttClient
@@ -33,8 +34,10 @@ async def main():
 if __name__ == '__main__':
 
 
-
-    try:
-        asyncio.run(main())
-    finally:
-        end_ts = datetime.timestamp(datetime.now())
+    mock()
+    # from database.queries.filial_orm import FilialOrm
+    # res = FilialOrm.get_all_filials()
+    # try:
+    #     asyncio.run(main())
+    # finally:
+    #     end_ts = datetime.timestamp(datetime.now())

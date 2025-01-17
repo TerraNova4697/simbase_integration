@@ -22,6 +22,7 @@ class Customer(Base):
 
     i_id: Mapped[int] = mapped_column(primary_key=True)
     s_name: Mapped[str] = mapped_column(Text, nullable=True)
+    id_sb_object_filial: Mapped[int]
     id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True) # TODO:
     s_bin: Mapped[str] = mapped_column(Text, nullable=True)
     d_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
@@ -241,7 +242,7 @@ class Incident(Base):
     __tablename__ = "incidents"
 
     i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sb_object_filial: Mapped[int] = mapped_column(Integer)
     incident_type: Mapped[str] = mapped_column(Text, nullable=True)
     case_to_police: Mapped[int] = mapped_column(SmallInteger, nullable=True)
     act_to_security_council: Mapped[int] = mapped_column(SmallInteger, nullable=True)
