@@ -1,8 +1,8 @@
 """initial
 
-Revision ID: e81dd58beccf
+Revision ID: 0acd355ceddf
 Revises: 
-Create Date: 2024-12-30 11:28:26.749153
+Create Date: 2025-01-24 12:21:54.414761
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'e81dd58beccf'
+revision: str = '0acd355ceddf'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -69,11 +69,12 @@ def upgrade() -> None:
     )
     op.create_table('customers',
     sa.Column('i_id', sa.Integer(), nullable=False),
-    sa.Column('s_name', sa.Text(), nullable=True),
-    sa.Column('id_sb_object_zakazchik', sa.Integer(), nullable=True),
-    sa.Column('s_bin', sa.Text(), nullable=True),
-    sa.Column('d_date', sa.DateTime(), nullable=True),
-    sa.PrimaryKeyConstraint('i_id')
+    sa.Column('name_customer', sa.Text(), nullable=False),
+    sa.Column('id_sb_object_zakazchik', sa.Integer(), nullable=False),
+    sa.Column('bin', sa.Text(), nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('i_id'),
+    sa.UniqueConstraint('id_sb_object_zakazchik')
     )
     op.create_table('drivers',
     sa.Column('i_id', sa.Integer(), nullable=False),
@@ -116,9 +117,9 @@ def upgrade() -> None:
     )
     op.create_table('filial',
     sa.Column('i_id', sa.Integer(), nullable=False),
-    sa.Column('s_name_filial', sa.Text(), nullable=True),
-    sa.Column('id_sb_object_filial', sa.Integer(), nullable=True),
-    sa.Column('d_date', sa.DateTime(), nullable=True),
+    sa.Column('name_filial', sa.Text(), nullable=False),
+    sa.Column('id_sb_object_filial', sa.Integer(), nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
     sa.PrimaryKeyConstraint('i_id')
     )
     op.create_table('filial_director',
@@ -165,7 +166,7 @@ def upgrade() -> None:
     sa.Column('erdr', sa.Text(), nullable=True),
     sa.Column('sb', sa.Text(), nullable=True),
     sa.Column('status', sa.Text(), nullable=True),
-    sa.PrimaryKeyConstraint('i_id', 'id_sb_object_filial')
+    sa.PrimaryKeyConstraint('i_id')
     )
     op.create_table('income',
     sa.Column('i_id', sa.Integer(), nullable=False),
@@ -271,17 +272,18 @@ def upgrade() -> None:
     )
     op.create_table('objects',
     sa.Column('i_id', sa.Integer(), nullable=False),
-    sa.Column('id_sb_object_filial', sa.Integer(), nullable=True),
-    sa.Column('id_sb_object_zakazchik', sa.Integer(), nullable=True),
-    sa.Column('id_sb_object_object', sa.Integer(), nullable=True),
+    sa.Column('id_sb_object_filial', sa.Integer(), nullable=False),
+    sa.Column('id_sb_object_zakazchik', sa.Integer(), nullable=False),
+    sa.Column('id_sb_object_object', sa.Integer(), nullable=False),
     sa.Column('object_name', sa.Text(), nullable=True),
-    sa.Column('dogovor', sa.Text(), nullable=True),
-    sa.Column('sb_id_dogovor', sa.Integer(), nullable=True),
-    sa.Column('dogovor_date', sa.Date(), nullable=True),
-    sa.Column('dogovor_num', sa.Text(), nullable=True),
-    sa.Column('object_type', sa.Text(), nullable=True),
-    sa.Column('d_date', sa.Date(), nullable=True),
-    sa.PrimaryKeyConstraint('i_id')
+    sa.Column('contract', sa.Text(), nullable=False),
+    sa.Column('id_sb_object_dogovor', sa.Integer(), nullable=False),
+    sa.Column('contract_date', sa.Date(), nullable=False),
+    sa.Column('dogovor_number', sa.Text(), nullable=True),
+    sa.Column('type', sa.String(), nullable=False),
+    sa.Column('date', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('i_id'),
+    sa.UniqueConstraint('id_sb_object_object')
     )
     op.create_table('offenses',
     sa.Column('i_id', sa.Integer(), nullable=False),

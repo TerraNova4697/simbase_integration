@@ -12,36 +12,35 @@ class Filial(Base):
     __tablename__ = "filial"
 
     i_id: Mapped[int] = mapped_column(primary_key=True)
-    s_name_filial: Mapped[str] = mapped_column(Text, nullable=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(nullable=True) # TODO: will be foreign key
-    d_date: Mapped[datetime] = mapped_column(nullable=True)
+    name_filial: Mapped[str] = mapped_column(Text)
+    id_sb_object_filial: Mapped[int]
+    date: Mapped[datetime]
 
 
 class Customer(Base):
     __tablename__ = "customers"
 
     i_id: Mapped[int] = mapped_column(primary_key=True)
-    s_name: Mapped[str] = mapped_column(Text, nullable=True)
-    id_sb_object_filial: Mapped[int]
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True) # TODO:
-    s_bin: Mapped[str] = mapped_column(Text, nullable=True)
-    d_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    name_customer: Mapped[str] = mapped_column(Text)
+    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, unique=True)
+    bin: Mapped[str] = mapped_column(Text)
+    date: Mapped[datetime]
 
 
 class Object(Base):
     __tablename__ = 'objects'
 
     i_id: Mapped[int] = mapped_column(primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)# TODO:
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)# TODO:
+    id_sb_object_filial: Mapped[int]
+    id_sb_object_zakazchik: Mapped[int]
+    id_sb_object_object: Mapped[int] = mapped_column(Integer, unique=True)
     object_name: Mapped[str] = mapped_column(Text, nullable=True)
-    dogovor: Mapped[str] = mapped_column(Text, nullable=True)
-    sb_id_dogovor: Mapped[int] = mapped_column(Integer, nullable=True)
-    dogovor_date: Mapped[date] = mapped_column(Date, nullable=True)
-    dogovor_num: Mapped[str] = mapped_column(Text, nullable=True)
-    object_type: Mapped[str] = mapped_column(Text, nullable=True)
-    d_date: Mapped[date] = mapped_column(Date, nullable=True)
+    contract: Mapped[str] = mapped_column(Text)
+    id_sb_object_dogovor: Mapped[int]
+    contract_date: Mapped[date]
+    contract_number: Mapped[str] = mapped_column(Text, nullable=True)
+    type: Mapped[str]
+    date: Mapped[datetime]
 
 
 class Post(Base):
@@ -537,3 +536,9 @@ class WeaponsAndSpecialEquipment(Base):
     car_dvr: Mapped[int] = mapped_column(Integer, nullable=True)
     cell_phones: Mapped[int] = mapped_column(Integer, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+
+
+class FetchedDates(Base):
+    __tablename__ = "fetched_dates"
+
+    date_created: Mapped[date] = mapped_column(Date, primary_key=True)

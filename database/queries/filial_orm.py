@@ -1,10 +1,25 @@
-from sqlalchemy import select
+from sqlalchemy import select, and_
+from datetime import date, timedelta
 
 from database.models import Filial
 from database.database import session_factory
 
 
 class FilialOrm:
+
+    @staticmethod
+    def get_all_by_date(dt: date) -> list[Filial]:
+        with session_factory() as session:
+            query = (
+                select(
+                    Filial
+                )
+                .where(and_(
+                    Filial.date >= dt,
+                    Filial.date < dt + timedelta(days=1)
+                ))
+            )
+            return session.execute(query).scalars().all()
 
     @staticmethod
     def insert_filial(**kwargs):
