@@ -1,5 +1,5 @@
 from database.models import Event
-from database.database import session_factory
+from database.simbase_database import session_factory
 
 
 class EventOrm:

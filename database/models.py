@@ -1,11 +1,11 @@
-from datetime import datetime, date, time
+from datetime import datetime, time
 from numbers import Integral
 
 from sqlalchemy import Integer, DateTime, Float, String, SmallInteger, Numeric, Date, Boolean, Time, Double, \
-    LargeBinary, Text, nulls_last
+    LargeBinary, Text, nulls_last, BigInteger
 from sqlalchemy.orm import Mapped, mapped_column
 
-from database.database import Base
+from database.simbase_database import Base
 
 
 class Filial(Base):
@@ -37,41 +37,42 @@ class Object(Base):
     object_name: Mapped[str] = mapped_column(Text, nullable=True)
     contract: Mapped[str] = mapped_column(Text)
     id_sb_object_dogovor: Mapped[int]
-    contract_date: Mapped[date]
+    contract_date: Mapped[Date] = mapped_column(Date)
     contract_number: Mapped[str] = mapped_column(Text, nullable=True)
-    type: Mapped[str]
+    type: Mapped[str] = mapped_column(Text)
     date: Mapped[datetime]
 
 
 class Post(Base):
     __tablename__ = 'posts'
 
-    i_id: Mapped[int] = mapped_column(primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
+    i_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id_sb_object_filial: Mapped[int]
+    id_sb_object_zakazchik: Mapped[int]
+    id_sb_object_object: Mapped[int]
     id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    post_name: Mapped[str] = mapped_column(Text, nullable=True)
-    post_type: Mapped[str] = mapped_column(Text, nullable=True)
-    shift_mode: Mapped[str] = mapped_column(Text, nullable=True)
-    d_date: Mapped[date] = mapped_column(Date, nullable=True)
+    name_post: Mapped[str] = mapped_column(Text)
+    type: Mapped[str] = mapped_column(Text)
+    shift_mode: Mapped[str]
+    date: Mapped[datetime]
 
 
 class MobileGroup(Base):
-    __tablename__ = "mob_groups"
+    __tablename__ = "mobile_groups"
 
     i_id: Mapped[int] = mapped_column(primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    mg_name: Mapped[str] = mapped_column(Text, nullable=True)
-    work_mode: Mapped[str] = mapped_column(Text, nullable=True)
-    shift_mode: Mapped[str] = mapped_column(Text, nullable=True)
-    linear_part: Mapped[str] = mapped_column(Text, nullable=True)
-    length_from: Mapped[str] = mapped_column(Text, nullable=True)
-    length_to: Mapped[str] = mapped_column(Text, nullable=True)
-    d_date: Mapped[date] = mapped_column(Date, nullable=True)
+    id_sb_object_filial: Mapped[int]
+    id_sb_object_zakazchik: Mapped[int]
+    id_sb_object_object: Mapped[int]
+    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
+    id_sb_object_mob_group: Mapped[int]
+    mobile_group_name: Mapped[str] = mapped_column(Text)
+    operating_mode: Mapped[str] = mapped_column(Text)
+    shift_mode: Mapped[str] = mapped_column(Text)
+    linear_part: Mapped[str] = mapped_column(Text)
+    length_from: Mapped[str] = mapped_column(Text)
+    length_to: Mapped[str] = mapped_column(Text)
+    date: Mapped[datetime]
 
 
 class Triggering(Base):
@@ -108,9 +109,9 @@ class Income(Base):
     contract_amount: Mapped[float] = mapped_column(Double, nullable=True)
     add_aggr_amount: Mapped[float] = mapped_column(Double, nullable=True)
     amount_avr: Mapped[float] = mapped_column(Double, nullable=True)
-    payment_date_avr: Mapped[date] = mapped_column(Date, nullable=True)
+    payment_date_avr: Mapped[Date] = mapped_column(Date, nullable=True)
     actual_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    payment_date_actual: Mapped[date] = mapped_column(Date, nullable=True)
+    payment_date_actual: Mapped[Date] = mapped_column(Date, nullable=True)
     deviation_amount: Mapped[float] = mapped_column(Double, nullable=True)
     deviation_from_avr: Mapped[float] = mapped_column(Double, nullable=True)
 
@@ -130,7 +131,7 @@ class Car(Base):
     card_of_refueling: Mapped[int] = mapped_column(Integer, nullable=True)
     battery_name: Mapped[str] = mapped_column(Text, nullable=True)
     battery_life_years: Mapped[int] = mapped_column(Integer, nullable=True)
-    battery_life: Mapped[date] = mapped_column(Date, nullable=True)
+    battery_life: Mapped[Date] = mapped_column(Date, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
@@ -177,10 +178,10 @@ class OsNma(Base):
     OS_groups: Mapped[str] = mapped_column(Text, nullable=True)
     name_of_reg_type: Mapped[str] = mapped_column(Text, nullable=True)
     serial_number: Mapped[str] = mapped_column(Text, nullable=True)
-    expiration_date: Mapped[date] = mapped_column(Date, nullable=True)
+    expiration_date: Mapped[Date] = mapped_column(Date, nullable=True)
     state: Mapped[str] = mapped_column(Text, nullable=True)
     brief_description: Mapped[str] = mapped_column(Text, nullable=True)
-    battery_life: Mapped[date] = mapped_column(Date, nullable=True)
+    battery_life: Mapped[Date] = mapped_column(Date, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
@@ -197,7 +198,7 @@ class Event(Base):
     kmg_security_employees: Mapped[int] = mapped_column(SmallInteger, nullable=True)
     contractor_employees: Mapped[int] = mapped_column(SmallInteger, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    commit_date: Mapped[date] = mapped_column(Date, nullable=True)
+    commit_date: Mapped[Date] = mapped_column(Date, nullable=True)
     time: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
     customer: Mapped[str] = mapped_column(Text, nullable=True)
     amount_of_damage: Mapped[str] = mapped_column(Text, nullable=True)
@@ -277,7 +278,7 @@ class Inventory(Base):
     object: Mapped[str] = mapped_column(Text, nullable=True)
     post: Mapped[str] = mapped_column(Text, nullable=True)
     remainder: Mapped[str] = mapped_column(Text, nullable=True)
-    date: Mapped[date] = mapped_column(DateTime, nullable=True)
+    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
 class IssuanceOfOsTmz(Base):
@@ -292,7 +293,7 @@ class IssuanceOfOsTmz(Base):
     object: Mapped[str] = mapped_column(Text, nullable=True)
     post: Mapped[str] = mapped_column(Text, nullable=True)
     remainder: Mapped[str] = mapped_column(Text, nullable=True)
-    date: Mapped[date] = mapped_column(DateTime, nullable=True)
+    date: Mapped[Date] = mapped_column(DateTime, nullable=True)
 
 
 class Journal(Base):
@@ -355,7 +356,7 @@ class Offense(Base):
     kmg_security_employees: Mapped[int] = mapped_column(SmallInteger, nullable=True)
     contractor_employees: Mapped[int] = mapped_column(SmallInteger, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    commit_date: Mapped[date] = mapped_column(Date, nullable=True)
+    commit_date: Mapped[Date] = mapped_column(Date, nullable=True)
     time: Mapped[DateTime] = mapped_column(DateTime, nullable=True)
     customer: Mapped[str] = mapped_column(Text, nullable=True)
     amount_of_damage: Mapped[str] = mapped_column(Text, nullable=True)
@@ -421,18 +422,26 @@ class RouteSheet(Base):
 
 
 class SecurityGuard(Base):
-    __tablename__ = "secutiry_guard"
+    __tablename__ = "secutiry_guards"
 
-    i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_guard: Mapped[int] = mapped_column(Integer, nullable=True)
+    i_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id_sb_guards: Mapped[int] = mapped_column(Integer)
     object_name: Mapped[str] = mapped_column(Text, nullable=True)
     name: Mapped[str] = mapped_column(Text, nullable=True)
+    surname: Mapped[str] = mapped_column(Text, nullable=True)
     job_title: Mapped[str] = mapped_column(Text, nullable=True)
     employee_photo: Mapped[LargeBinary] = mapped_column(LargeBinary, nullable=True)
     gender: Mapped[str] = mapped_column(Text, nullable=True)
     nationality: Mapped[str] = mapped_column(Text, nullable=True)
     customer: Mapped[str] = mapped_column(Text, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
+    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
+    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
+    iin: Mapped[str] = mapped_column(Text, nullable=True)
+    social_status: Mapped[str] = mapped_column(Text, nullable=True)
+    status: Mapped[str] = mapped_column(Text, nullable=True)
+    labor_union: Mapped[str] = mapped_column(Text, nullable=True)
 
 
 class ShiftSchedule(Base):
@@ -443,7 +452,7 @@ class ShiftSchedule(Base):
     id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
     id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
     id_sb_ohranniki: Mapped[int] = mapped_column(Integer, nullable=True)
-    shift_date: Mapped[date] = mapped_column(Date, nullable=True)
+    shift_date: Mapped[Date] = mapped_column(Date, nullable=True)
     day_of_week: Mapped[str] = mapped_column(Text, nullable=True)
     shift_type: Mapped[str] = mapped_column(Text, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
@@ -536,9 +545,3 @@ class WeaponsAndSpecialEquipment(Base):
     car_dvr: Mapped[int] = mapped_column(Integer, nullable=True)
     cell_phones: Mapped[int] = mapped_column(Integer, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-
-
-class FetchedDates(Base):
-    __tablename__ = "fetched_dates"
-
-    date_created: Mapped[date] = mapped_column(Date, primary_key=True)

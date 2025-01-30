@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from requests import session
 from sqlalchemy import delete
 
-from database.database import Base, engine, session_factory
+from database.simbase_database import Base, engine, session_factory
 from database.models import DeviceTelemetry
 from config.settings import settings
 

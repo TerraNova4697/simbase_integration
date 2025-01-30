@@ -14,6 +14,11 @@ class Settings(BaseSettings):
     DB_ADDRESS: str = Field(validation_alias='DB_ADDRESS')
     DB_NAME: str = Field(validation_alias='DB_NAME')
     DB_PORT: str = Field(validation_alias='DB_PORT')
+    SS_DB_USERNAME: str = Field(validation_alias='SS_DB_USERNAME')
+    SS_DB_PASSWORD: str = Field(validation_alias='SS_DB_PASSWORD')
+    SS_DB_ADDRESS: str = Field(validation_alias='SS_DB_ADDRESS')
+    SS_DB_NAME: str = Field(validation_alias='SS_DB_NAME')
+    SS_DB_PORT: str = Field(validation_alias='SS_DB_PORT')
 
     # DEVELOPMENT DATABASE
     DEVELOPMENT_DB_USERNAME: str = Field(validation_alias='DEVELOPMENT_DB_USERNAME')
@@ -35,11 +40,15 @@ class Settings(BaseSettings):
 
     @property
     def database_url(self):
-        return f"postgresql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
+        return f"mysql+pymysql://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_ADDRESS}:{self.DB_PORT}/{self.DB_NAME}"
+
+    @property
+    def superset_database_url(self):
+        return f"postgresql://{self.SS_DB_USERNAME}:{self.SS_DB_PASSWORD}@{self.SS_DB_ADDRESS}:{self.SS_DB_PORT}/{self.SS_DB_NAME}"
 
     @property
     def development_database_url(self):
-        return (f"postgresql://{self.DEVELOPMENT_DB_USERNAME}:{self.DEVELOPMENT_DB_PASSWORD}@"
+        return (f"mysql+pymysql://{self.DEVELOPMENT_DB_USERNAME}:{self.DEVELOPMENT_DB_PASSWORD}@"
                 f"{self.DEVELOPMENT_DB_ADDRESS}:{self.DEVELOPMENT_DB_PORT}/{self.DEVELOPMENT_DB_NAME}")
 
     @property

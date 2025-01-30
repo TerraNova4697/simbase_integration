@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
 from database.models import Income
-from database.database import session_factory
+from database.simbase_database import session_factory
 
 
 class IncomeOrm:

@@ -6,8 +6,8 @@ from sqlalchemy import pool
 from alembic import context
 
 from config.settings import settings
-from database.models import *
-from database.database import Base
+from database.superset_models import *
+from database.superset_database import Base
 
 
 # this is the Alembic Config object, which provides
@@ -21,7 +21,7 @@ if config.config_file_name is not None:
 
 # АЛЕМБИК ИСПОЛЬЗУЕТСЯ ТОЛЬКО В СРЕДЕ РАЗРАБОТКИ И НЕ ПРИМЕНЯЕТСЯ В ПРОДАКШН
 config.set_main_option(
-    "sqlalchemy.url", settings.development_database_url
+    "sqlalchemy.url", settings.superset_database_url
 )
 
 

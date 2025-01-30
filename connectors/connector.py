@@ -1,10 +1,7 @@
-import asyncio
-from datetime import datetime, timedelta, date
+from datetime import date
 import logging
 
 from config.settings import settings
-from database.queries.gps_orm import GpsORM
-from destination.mqtt_client import CubaMqttClient
 from database.queries import FetchedDatesOrm
 from .scheduler import Scheduler
 from .task_runner import TaskRunner
@@ -15,8 +12,7 @@ logger = logging.getLogger(settings.LOGGER)
 
 class Connector:
 
-    def __init__(self, destination, scheduler: Scheduler, task_runner: TaskRunner):
-        self.destination: CubaMqttClient = destination
+    def __init__(self, scheduler: Scheduler, task_runner: TaskRunner):
         self.scheduler: Scheduler = scheduler
         self.task_runner: TaskRunner = task_runner
 

@@ -2,7 +2,7 @@ from datetime import datetime
 
 from sqlalchemy import select, and_, or_
 
-from database.database import session_factory
+from database.simbase_database import session_factory
 # from database.models import DeviceTelemetry
 
 

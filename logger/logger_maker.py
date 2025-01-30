@@ -21,7 +21,6 @@ class LoggerMaker:
         self._logs_path = logs_path
 
     def make(self) -> Logger:
-        print("Создание логгера")
         teltonika_logger = logging.getLogger(self._logger_name)
 
         file_handler = TimedRotatingFileHandler(
