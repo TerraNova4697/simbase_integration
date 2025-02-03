@@ -243,6 +243,6 @@ class Income(Base):
     deviation_from_contract_prc: Mapped[str] = mapped_column(String(length=255), nullable=True)
     deviation_from_avr_prc: Mapped[str] = mapped_column(String(length=255), nullable=True)
     remainder: Mapped[float] = mapped_column(Double, nullable=True)
-    comment: Mapped[float] = mapped_column(Double, nullable=True)
+    comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
     additional_comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
     date: Mapped[datetime]
