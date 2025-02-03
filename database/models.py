@@ -422,7 +422,7 @@ class RouteSheet(Base):
 
 
 class SecurityGuard(Base):
-    __tablename__ = "secutiry_guards"
+    __tablename__ = "security_guards"
 
     i_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     id_sb_guards: Mapped[int] = mapped_column(Integer)
