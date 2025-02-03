@@ -113,7 +113,7 @@ class Superset:
                 year=inc.year,
                 month=inc.month,
                 contract_amount=inc.contract_amount,
-                additional_agreement_amount=inc.additional_aggreement_amount,
+                additional_agreement_amount=inc.additional_agreement_amount,
                 amount_avr=inc.amount_avr,
                 payment_date_avr=inc.payment_date_avr,
                 actual_payment=inc.actual_payment,
