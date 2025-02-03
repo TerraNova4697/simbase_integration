@@ -216,16 +216,16 @@ class Income(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     id_sm: Mapped[int] = mapped_column(Integer, unique=True)
 
-    filial_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="income")
 
-    customer_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    customer_id_sm: Mapped[int] = mapped_column(ForeignKey("customers.id_sm", ondelete="NO ACTION"), nullable=True)
     customer: Mapped["Customer"] = relationship(back_populates="income")
     
-    object_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    object_id_sm: Mapped[int] = mapped_column(ForeignKey("objects.id_sm", ondelete="NO ACTION"), nullable=True)
     object: Mapped["Object"] = relationship(back_populates="income")
     
-    contract_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    contract_id_sm: Mapped[int] = mapped_column(ForeignKey("contract.id_sm", ondelete="NO ACTION"), nullable=True)
     contract: Mapped["Contract"] = relationship(back_populates="income")
     
     type: Mapped[str] = mapped_column(String(length=255), nullable=True)
