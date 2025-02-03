@@ -33,6 +33,7 @@ class SsIncomeOrm:
                         from_attributes=True
                     ).model_dump(mode="json")
                 ))
+                session.commit()
 
 
 class IncomeOrm:
