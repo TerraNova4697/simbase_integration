@@ -41,7 +41,7 @@ class Superset:
                 filial_id_sm=object.id_sb_object_filial,
                 customer_id_sm=object.id_sb_object_zakazchik,
                 contract=object.contract,
-                name=object.object_name,
+                name=object.name_object,
                 contract_date=object.contract_date,
                 contract_number=object.contract_number,
                 type=object.type,
