@@ -104,16 +104,24 @@ class Income(Base):
     id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
     id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
     id_sb_object_dogovor: Mapped[int] = mapped_column(Integer, nullable=True)
+    type_dogovor: Mapped[str] = mapped_column(Text, nullable=True)
+    status_dogovor: Mapped[str] = mapped_column(Text, nullable=True)
     year: Mapped[int] = mapped_column(Integer, nullable=True)
     month: Mapped[str] = mapped_column(Text, nullable=True)
     contract_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    add_aggr_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    additional_aggreement_amount: Mapped[float] = mapped_column(Double, nullable=True)
     amount_avr: Mapped[float] = mapped_column(Double, nullable=True)
     payment_date_avr: Mapped[Date] = mapped_column(Date, nullable=True)
-    actual_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    actual_payment: Mapped[float] = mapped_column(Double, nullable=True)
     payment_date_actual: Mapped[Date] = mapped_column(Date, nullable=True)
     deviation_amount: Mapped[float] = mapped_column(Double, nullable=True)
     deviation_from_avr: Mapped[float] = mapped_column(Double, nullable=True)
+    deviation_from_contract_prc: Mapped[str] = mapped_column(Text, nullable=True)
+    deviation_from_avr_prc: Mapped[str] = mapped_column(Text, nullable=True)
+    remainder: Mapped[float] = mapped_column(Double, nullable=True)
+    comment: Mapped[str] = mapped_column(Text, nullable=True)
+    additional_comment: Mapped[str] = mapped_column(Text, nullable=True)
+    date: Mapped[datetime]
 
 
 class Car(Base):

@@ -50,6 +50,10 @@ class Filial(Base):
         back_populates="filial",
         primaryjoin="Filial.id_sm == SecurityGuard.filial_id_sm",
     )
+    income: Mapped[list["Income"]] = relationship(
+        back_populates="filial",
+        primaryjoin="Filial.id_sm == Income.filial_id_sm",
+    )
 
 
 class Customer(Base):
@@ -77,6 +81,10 @@ class Customer(Base):
         back_populates="customer",
         primaryjoin="Customer.id_sm == SecurityGuard.customer_id_sm",
     )
+    income: Mapped[list["Income"]] = relationship(
+        back_populates="customer",
+        primaryjoin="Customer.id_sm == Income.customer_id_sm",
+    )
 
 
 class Contract(Base):
@@ -84,10 +92,15 @@ class Contract(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
 
     object: Mapped[list["Object"]] = relationship(
         back_populates='dogovor',
         primaryjoin="Contract.id_sm == Object.dogovor_id_sm",
+    )
+    income: Mapped[list["Income"]] = relationship(
+        back_populates='contract',
+        primaryjoin="Contract.id_sm == Income.contract_id_sm",
     )
 
 
@@ -124,6 +137,10 @@ class Object(Base):
     security_guards: Mapped[list["SecurityGuard"]] = relationship(
         back_populates="object",
         primaryjoin="Object.id_sm == SecurityGuard.object_id_sm",
+    )
+    income: Mapped[list["Income"]] = relationship(
+        back_populates="object",
+        primaryjoin="Object.id_sm == Income.object_id_sm",
     )
 
 
@@ -190,4 +207,42 @@ class SecurityGuard(Base):
     gender: Mapped[str] = mapped_column(String(length=255), nullable=True)
     nationality: Mapped[str] = mapped_column(String(length=255), nullable=True)
     labor_union: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    date: Mapped[datetime]
+
+
+class Income(Base):
+    __tablename__ = "income"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+
+    filial_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    filial: Mapped["Filial"] = relationship(back_populates="income")
+
+    customer_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    customer: Mapped["Customer"] = relationship(back_populates="income")
+    
+    object_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    object: Mapped["Object"] = relationship(back_populates="income")
+    
+    contract_id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
+    contract: Mapped["Contract"] = relationship(back_populates="income")
+    
+    type: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    status: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    year: Mapped[int] = mapped_column(Integer, nullable=True)
+    month: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    contract_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    additional_agreement_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    amount_avr: Mapped[float] = mapped_column(Double, nullable=True)
+    payment_date_avr: Mapped[Date] = mapped_column(Date, nullable=True)
+    actual_payment: Mapped[float] = mapped_column(Double, nullable=True)
+    payment_date_actual: Mapped[Date] = mapped_column(Date, nullable=True)
+    deviation_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    deviation_from_avr: Mapped[float] = mapped_column(Double, nullable=True)
+    deviation_from_contract_prc: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    deviation_from_avr_prc: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    remainder: Mapped[float] = mapped_column(Double, nullable=True)
+    comment: Mapped[float] = mapped_column(Double, nullable=True)
+    additional_comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
     date: Mapped[datetime]

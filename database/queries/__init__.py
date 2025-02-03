@@ -6,3 +6,4 @@ from .post_orm import PostOrm, SsPostOrm
 from .mobile_group_orm import MobileGroupOrm, SsMobGroupOrm
 from .route_sheet_orm import RouteSheetOrm
 from .security_guard_orm import SecurityGuardOrm, SsSecurityGuardOrm
+from .income_orm import IncomeOrm, SsIncomeOrm
