@@ -125,7 +125,8 @@ class Superset:
                 remainder=inc.remainder,
                 comment=inc.comment,
                 additional_comment=inc.additional_comment,
-                date=inc.date
+                date=inc.date,
+                model=inc
             )
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
