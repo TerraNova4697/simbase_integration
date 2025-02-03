@@ -1,7 +1,7 @@
 import asyncio
 from logger import logger
 
-from database.queries import FilialOrm, CustomerOrm, ObjectOrm, PostOrm, MobileGroupOrm, RouteSheetOrm, SecurityGuardOrm
+from database.queries import *
 from util_functions import try_times
 from destination.mqtt_client import CubaMqttClient
 from destination.superset import Superset
@@ -19,6 +19,7 @@ class TaskRunner:
             self.fetch_mobile_groups,
             self.fetch_posts,
             self.fetch_security_guards,
+            self.fetch_income,
             # self.fetch_route_sheet,
         ]
 
@@ -81,3 +82,9 @@ class TaskRunner:
         simbase_security_guards = SecurityGuardOrm.all()
         self.superset.consume_security_guards(simbase_security_guards)
         logger.info("Fetched security guards")
+
+    @try_times(number_of_tries=3)
+    async def fetch_income(self):
+        simbase_income = IncomeOrm.all()
+        self.superset.consume_income(simbase_income)
+        logger.info("Fetched income")
