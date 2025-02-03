@@ -34,7 +34,7 @@ class Object(Base):
     id_sb_object_filial: Mapped[int]
     id_sb_object_zakazchik: Mapped[int]
     id_sb_object_object: Mapped[int] = mapped_column(Integer, unique=True)
-    object_name: Mapped[str] = mapped_column(Text, nullable=True)
+    name_object: Mapped[str] = mapped_column(Text, nullable=True)
     contract: Mapped[str] = mapped_column(Text)
     id_sb_object_dogovor: Mapped[int]
     contract_date: Mapped[Date] = mapped_column(Date)
