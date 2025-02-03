@@ -23,7 +23,7 @@ class ObjectModel(BaseModel):
     id_sb_object_filial: int | None
     id_sb_object_zakazchik: int | None
     id_sb_object_object: int | None
-    object_name: str | None
+    name_object: str | None
     contract: str | None
     id_sb_object_dogovor: int | None
     contract_date: date | None
