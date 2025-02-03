@@ -109,7 +109,7 @@ class Income(Base):
     year: Mapped[int] = mapped_column(Integer, nullable=True)
     month: Mapped[str] = mapped_column(Text, nullable=True)
     contract_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    additional_aggreement_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    additional_agreement_amount: Mapped[float] = mapped_column(Double, nullable=True)
     amount_avr: Mapped[float] = mapped_column(Double, nullable=True)
     payment_date_avr: Mapped[Date] = mapped_column(Date, nullable=True)
     actual_payment: Mapped[float] = mapped_column(Double, nullable=True)
