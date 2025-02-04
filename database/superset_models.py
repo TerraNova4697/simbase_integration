@@ -214,7 +214,7 @@ class Income(Base):
     __tablename__ = "income"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[int] = mapped_column(Integer, nullable=True)
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="income")
