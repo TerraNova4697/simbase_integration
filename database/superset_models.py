@@ -360,17 +360,14 @@ class Income(Base):
     __tablename__ = "income"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[int] = mapped_column(Integer, unique=True, nullable=True)
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="income")
-
     customer_id_sm: Mapped[int] = mapped_column(ForeignKey("customers.id_sm", ondelete="NO ACTION"), nullable=True)
     customer: Mapped["Customer"] = relationship(back_populates="income")
-    
     object_id_sm: Mapped[int] = mapped_column(ForeignKey("objects.id_sm", ondelete="NO ACTION"), nullable=True)
     object: Mapped["Object"] = relationship(back_populates="income")
-    
     contract_id_sm: Mapped[int] = mapped_column(ForeignKey("contracts.id_sm", ondelete="NO ACTION"), nullable=True)
     contract: Mapped["Contract"] = relationship(back_populates="income")
     

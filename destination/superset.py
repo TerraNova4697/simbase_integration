@@ -108,6 +108,7 @@ class Superset:
                 filial_id_sm=inc.id_sb_object_filial,
                 customer_id_sm=inc.id_sb_object_zakazchik,
                 object_id_sm=inc.id_sb_object_object,
+                contract_id_sm=None,
                 type=inc.type_dogovor,
                 status=inc.status_dogovor,
                 year=inc.year,
@@ -125,7 +126,8 @@ class Superset:
                 remainder=inc.remainder,
                 comment=inc.comment,
                 additional_comment=inc.additional_comment,
-                date=inc.date,
+                date_modified=inc.date,
+                date_created=inc.date,
                 model=inc
             )
 
