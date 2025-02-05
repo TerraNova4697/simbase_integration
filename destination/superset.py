@@ -87,11 +87,11 @@ class Superset:
     def consume_income(self, income: list[Income]) -> None:
         for inc in income:
             SsIncomeOrm.create(
-                id_sm=inc.id_sb_object_dogovor,
+                id_sm=None,
                 filial_id_sm=inc.id_sb_object_filial,
                 customer_id_sm=inc.id_sb_object_zakazchik,
                 object_id_sm=inc.id_sb_object_object,
-                contract_id_sm=None,
+                contract_id_sm=inc.id_sb_object_dogovor,
                 type=inc.type_dogovor,
                 status=inc.status_dogovor,
                 year=inc.year,
