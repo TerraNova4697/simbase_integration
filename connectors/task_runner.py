@@ -16,7 +16,6 @@ class TaskRunner:
             # self.fetch_filials,
             # self.fetch_customers,
             # self.fetch_objects,
-            # self.fetch_mobile_groups,
             # self.fetch_posts,
             # self.fetch_security_guards,
             self.fetch_income,
@@ -64,12 +63,6 @@ class TaskRunner:
         simbase_posts = PostOrm.all()
         self.superset.consume_posts(simbase_posts)
         logger.info("Fetched posts")
-
-    @try_times(number_of_tries=3)
-    async def fetch_mobile_groups(self):
-        simbase_mobile_groups = MobileGroupOrm.all()
-        self.superset.consume_mobile_groups(simbase_mobile_groups)
-        logger.info("Fetched mobile groups")
 
     @try_times(number_of_tries=3)
     async def fetch_route_sheet(self):

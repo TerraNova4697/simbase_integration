@@ -4,7 +4,6 @@ from database.queries import (
     SsCustomerOrm,
     SsObjectOrm,
     SsPostOrm,
-    SsMobGroupOrm,
     SsSecurityGuardOrm,
     SsIncomeOrm
 )
@@ -62,22 +61,6 @@ class Superset:
                 shift_mode=post.shift_mode,
                 date=post.date,
                 model=post
-            )
-
-    def consume_mobile_groups(self, mob_groups: list[MobileGroup]) -> None:
-        for mob_group in mob_groups:
-            SsMobGroupOrm.create(
-                id_sm=mob_group.id_sb_object_mob_group,
-                filial_id_sm=mob_group.id_sb_object_filial,
-                customer_id_sm=mob_group.id_sb_object_zakazchik,
-                object_id_sm=mob_group.id_sb_object_object,
-                name=mob_group.mobile_group_name,
-                operating_mode=mob_group.operating_mode,
-                linear_part=mob_group.linear_part,
-                length_from=float(mob_group.length_from),
-                length_to=float(mob_group.length_to),
-                date=mob_group.date,
-                model=mob_group
             )
 
     def consume_security_guards(self, guards: list[SecurityGuard]) -> None:
