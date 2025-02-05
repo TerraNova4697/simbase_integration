@@ -73,7 +73,7 @@ class Filial(Base):
     )
     fines: Mapped[list["Fine"]] = relationship(
         back_populates="filial",
-        primaryjoin="Filial.id_sm == fines.filial_id_sm",
+        primaryjoin="Filial.id_sm == Fine.filial_id_sm",
     )
     triggerings: Mapped[list["Triggering"]] = relationship(
         back_populates="filial",
@@ -183,8 +183,8 @@ class Contract(Base):
     date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
-    object: Mapped[list["Object"]] = relationship(
-        back_populates='dogovor',
+    objects: Mapped[list["Object"]] = relationship(
+        back_populates='contract',
         primaryjoin="Contract.id_sm == Object.contract_id_sm",
     )
     income: Mapped[list["Income"]] = relationship(
@@ -206,9 +206,9 @@ class Object(Base):
     customer: Mapped["Customer"] = relationship(back_populates="objects")
 
     contract_id_sm: Mapped[int] = mapped_column(ForeignKey("contracts.id_sm", ondelete="CASCADE"), nullable=True)
-    contract: Mapped["Contract"] = relationship(back_populates="object")
+    contract: Mapped["Contract"] = relationship(back_populates="objects")
 
-    contract: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    contract_name: Mapped[vc255]
     name: Mapped[str] = mapped_column(String(length=255), nullable=True)
     contract_date: Mapped[Date] = mapped_column(Date, nullable=True)
     contract_number: Mapped[str] = mapped_column(String(length=255), nullable=True)
@@ -575,9 +575,9 @@ class Shift(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="shifts")
     security_guard_id_sm: Mapped[int] = mapped_column(ForeignKey("security_guards.id_sm", ondelete="NO ACTION"), nullable=True)
-    security_guard: Mapped["Post"] = relationship(back_populates="shifts")
-    security_guard_replaces_id_sm: Mapped[int] = mapped_column(ForeignKey("security_guards.id_sm", ondelete="NO ACTION"), nullable=True)
-    security_guard_replaces: Mapped["Post"] = relationship(back_populates="shifts_replaced")
+    security_guard: Mapped["SecurityGuard"] = relationship(back_populates="shifts", foreign_keys=[security_guard_id_sm])
+    security_guard_replaced_id_sm: Mapped[int] = mapped_column(ForeignKey("security_guards.id_sm", ondelete="NO ACTION"), nullable=True)
+    security_guard_replaced: Mapped["SecurityGuard"] = relationship(back_populates="shifts_replaced", foreign_keys=[security_guard_replaced_id_sm])
 
     joined_posts: Mapped[boolnull]
     shift_date: Mapped[date] = mapped_column(Date, nullable=True)
