@@ -16,24 +16,24 @@ class SsIncomeOrm:
     def create(**kwargs) -> None:
         with superset_session_factory() as session:
             initial_model = kwargs.pop('model')
-            # try:
-            income = SsIncome(**kwargs)
-            session.add(income)
-            session.commit()
-            # except IntegrityError as exc:
-            #     session.rollback()
-            #     compiled = income.__table__.insert().values(**kwargs).compile(compile_kwargs={"literal_binds": True})
-            #     session.add(SqlError(
-            #         exception=str(exc.__class__),
-            #         traceback=format_exc(),
-            #         sql=str(compiled),
-            #         target_model=SsIncome.__name__,
-            #         source_object=IncomeModel.model_validate(
-            #             initial_model,
-            #             from_attributes=True
-            #         ).model_dump(mode="json")
-            #     ))
-            #     session.commit()
+            try:
+                income = SsIncome(**kwargs)
+                session.add(income)
+                session.commit()
+            except IntegrityError as exc:
+                session.rollback()
+                compiled = income.__table__.insert().values(**kwargs).compile(compile_kwargs={"literal_binds": True})
+                session.add(SqlError(
+                    exception=str(exc.__class__),
+                    traceback=format_exc(),
+                    sql=str(compiled),
+                    target_model=SsIncome.__name__,
+                    source_object=IncomeModel.model_validate(
+                        initial_model,
+                        from_attributes=True
+                    ).model_dump(mode="json")
+                ))
+                session.commit()
 
 
 class IncomeOrm:
