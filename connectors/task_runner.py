@@ -13,11 +13,11 @@ class TaskRunner:
         self.superset: Superset = superset
         self.mqtt_client: CubaMqttClient = mqtt_client
         self.tasks_table = [
-            # self.fetch_filials,
-            # self.fetch_customers,
-            # self.fetch_objects,
-            # self.fetch_posts,
-            # self.fetch_security_guards,
+            self.fetch_filials,
+            self.fetch_customers,
+            self.fetch_objects,
+            self.fetch_posts,
+            self.fetch_security_guards,
             self.fetch_income,
             # self.fetch_route_sheet,
         ]
