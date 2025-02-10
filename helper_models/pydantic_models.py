@@ -7,8 +7,8 @@ class FilialModel(BaseModel):
     id: int | None
     id_sm: int | None
     name: str | None
-    latitude: float | None
-    longitude: float | None
+    latitude: float | None = None
+    longitude: float | None = None
     date_modified: datetime | None
     date_created: datetime | None
 
