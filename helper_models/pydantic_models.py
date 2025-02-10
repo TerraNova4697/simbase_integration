@@ -46,7 +46,7 @@ class PostModel(BaseModel):
     object_id_sm: int | None
     name: str | None
     type: str | None
-    shift_mode: int | None
+    shift_mode: str | None
     operating_mode: int | None
     linear_part: str | None
     length_from: float | None
