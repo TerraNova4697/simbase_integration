@@ -20,7 +20,7 @@ smallintnull = Annotated[int, mapped_column(SmallInteger, nullable=True)]
 
 
 class Filial(Base):
-    __tablename__ = "filial"
+    __tablename__ = "filials"
 
     id: Mapped[pk]
     id_sm: Mapped[int]
@@ -69,7 +69,7 @@ class Post(Base):
     name: Mapped[vc255]
     type: Mapped[vc255]
     shift_mode: Mapped[intnull]
-    operation_mode: Mapped[intnull]
+    operating_mode: Mapped[intnull]
     linear_part: Mapped[str] = mapped_column(MEDIUMTEXT, nullable=True)
     length_from: Mapped[doublenull]
     length_to: Mapped[doublenull]
