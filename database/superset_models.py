@@ -1,8 +1,7 @@
 from datetime import datetime, time, date
-from numbers import Integral
 
-from sqlalchemy import Integer, DateTime, Float, String, SmallInteger, Numeric, Date, Boolean, text, Double, \
-    LargeBinary, Text, nulls_last, ForeignKey, JSON, Time
+from sqlalchemy import Integer, DateTime, String, SmallInteger, Date, Boolean, Double, \
+    LargeBinary, Text, ForeignKey, JSON, Time
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from typing import Annotated
 
@@ -14,8 +13,14 @@ from database.superset_database import Base
 #         onupdate=datetime.datetime.utcnow,
 #     )]
 
+pk = Annotated[int, mapped_column(Integer, primary_key=True)]
+id_sm_key = Annotated[int, mapped_column(Integer, unique=True)]
 vc255 = Annotated[str, mapped_column(String(length=255), nullable=True)]
 boolnull = Annotated[bool, mapped_column(Boolean, nullable=True)]
+doublenull = Annotated[float, mapped_column(Double, nullable=True)]
+dtnull = Annotated[datetime, mapped_column(DateTime, nullable=True)]
+intnull = Annotated[int, mapped_column(Integer, nullable=True)]
+smallintnull = Annotated[int, mapped_column(SmallInteger, nullable=True)]
 
 
 class FetchedDates(Base):
@@ -39,12 +44,10 @@ class Filial(Base):
     __tablename__ = "filials"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
-    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    longitude: Mapped[float] = mapped_column(Double, nullable=True)
-    latitude: Mapped[float] = mapped_column(Double, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id_sm: Mapped[id_sm_key]
+    name: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     objects: Mapped[list['Object']] = relationship(
         back_populates='filial',
@@ -117,12 +120,12 @@ class Customer(Base):
     __tablename__ = "customers"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
-    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    bin: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    status: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id_sm: Mapped[id_sm_key]
+    name: Mapped[vc255]
+    bin: Mapped[vc255]
+    status: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     posts: Mapped[list["Post"]] = relationship(
         back_populates='customer',
@@ -172,16 +175,29 @@ class Customer(Base):
         back_populates="customer",
         primaryjoin="Customer.id_sm == WeaponAndSpecEquipment.customer_id_sm",
     )
+    contracts: Mapped[list["Contract"]] = relationship(
+        back_populates="customer",
+        primaryjoin="Customer.id_sm == Contract.customer_id_sm",
+    )
 
 
 class Contract(Base):
     __tablename__ = "contracts"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
-    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id_sm: Mapped[id_sm_key]
+    start_date: Mapped[date] = mapped_column(Date, nullable=True)
+    warning_date: Mapped[date] = mapped_column(Date, nullable=True)
+    end_date: Mapped[date] = mapped_column(Date, nullable=True)
+
+    customer_id_sm: Mapped[int] = mapped_column(ForeignKey("customers.id_sm", ondelete="NO ACTION"), nullable=True)
+    customer: Mapped["Customer"] = relationship(back_populates="contracts")
+
+    name: Mapped[vc255]
+    type: Mapped[vc255]
+    contract_number: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     objects: Mapped[list["Object"]] = relationship(
         back_populates='contract',
@@ -197,7 +213,7 @@ class Object(Base):
     __tablename__ = "objects"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="CASCADE"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="objects")
@@ -209,12 +225,13 @@ class Object(Base):
     contract: Mapped["Contract"] = relationship(back_populates="objects")
 
     contract_name: Mapped[vc255]
-    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    name: Mapped[vc255]
     contract_date: Mapped[Date] = mapped_column(Date, nullable=True)
-    contract_number: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    type: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    contract_number: Mapped[vc255]
+    type: Mapped[vc255]
+    category: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     posts: Mapped[list["Post"]] = relationship(
         back_populates='object',
@@ -246,7 +263,7 @@ class Post(Base):
     __tablename__ = 'posts'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="CASCADE"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="posts")
@@ -255,15 +272,15 @@ class Post(Base):
     object_id_sm: Mapped[int] = mapped_column(ForeignKey("objects.id_sm", ondelete="CASCADE"), nullable=True)
     object: Mapped["Object"] = relationship(back_populates="posts")
 
-    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    type: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    shift_mode: Mapped[int] = mapped_column(Integer, nullable=True)
-    operation_mode: Mapped[int] = mapped_column(Integer, nullable=True)
+    name: Mapped[vc255]
+    type: Mapped[vc255]
+    shift_mode: Mapped[intnull]
+    operation_mode: Mapped[intnull]
     linear_part: Mapped[str] = mapped_column(Text, nullable=True)
-    length_from: Mapped[float] = mapped_column(Double, nullable=True)
-    length_to: Mapped[float] = mapped_column(Double, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    length_from: Mapped[doublenull]
+    length_to: Mapped[doublenull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     triggerings: Mapped[list["Triggering"]] = relationship(
         back_populates="post",
@@ -303,7 +320,7 @@ class Post(Base):
 #     __tablename__ = "mob_groups"
 
 #     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-#     id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+#     id_sm: Mapped[id_sm_key]
 
 #     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="CASCADE"))
 #     filial: Mapped["Filial"] = relationship(back_populates="mob_groups")
@@ -324,7 +341,7 @@ class SecurityGuard(Base):
     __tablename__ = "security_guards"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="CASCADE"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="security_guards")
@@ -333,18 +350,18 @@ class SecurityGuard(Base):
     object_id_sm: Mapped[int] = mapped_column(ForeignKey("objects.id_sm", ondelete="CASCADE"), nullable=True)
     object: Mapped["Object"] = relationship(back_populates="security_guards")
 
-    name: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    surname: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    iin: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    social_status: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    status: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    job_title: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    name: Mapped[vc255]
+    surname: Mapped[vc255]
+    iin: Mapped[vc255]
+    social_status: Mapped[vc255]
+    status: Mapped[vc255]
+    job_title: Mapped[vc255]
     employee_photo: Mapped[LargeBinary] = mapped_column(LargeBinary, nullable=True)
-    gender: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    nationality: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    labor_union: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    gender: Mapped[vc255]
+    nationality: Mapped[vc255]
+    labor_union: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     shifts: Mapped[list["Shift"]] = relationship(
         back_populates="security_guard",
@@ -360,43 +377,42 @@ class Income(Base):
     __tablename__ = "income"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True, nullable=True)
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="income")
-    customer_id_sm: Mapped[int] = mapped_column(ForeignKey("customers.id_sm", ondelete="NO ACTION"), nullable=True)
-    customer: Mapped["Customer"] = relationship(back_populates="income")
-    object_id_sm: Mapped[int] = mapped_column(ForeignKey("objects.id_sm", ondelete="NO ACTION"), nullable=True)
-    object: Mapped["Object"] = relationship(back_populates="income")
+    # customer_id_sm: Mapped[int] = mapped_column(ForeignKey("customers.id_sm", ondelete="NO ACTION"), nullable=True)
+    # customer: Mapped["Customer"] = relationship(back_populates="income")
+    # object_id_sm: Mapped[int] = mapped_column(ForeignKey("objects.id_sm", ondelete="NO ACTION"), nullable=True)
+    # object: Mapped["Object"] = relationship(back_populates="income")
     contract_id_sm: Mapped[int] = mapped_column(ForeignKey("contracts.id_sm", ondelete="NO ACTION"), nullable=True)
     contract: Mapped["Contract"] = relationship(back_populates="income")
     
-    type: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    status: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    year: Mapped[int] = mapped_column(Integer, nullable=True)
-    month: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    contract_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    additional_agreement_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    amount_avr: Mapped[float] = mapped_column(Double, nullable=True)
+    type: Mapped[vc255]
+    status: Mapped[vc255]
+    year: Mapped[intnull]
+    month: Mapped[vc255]
+    contract_amount: Mapped[doublenull]
+    additional_agreement_amount: Mapped[doublenull]
+    amount_avr: Mapped[doublenull]
     payment_date_avr: Mapped[Date] = mapped_column(Date, nullable=True)
-    actual_payment: Mapped[float] = mapped_column(Double, nullable=True)
+    actual_payment: Mapped[doublenull]
     payment_date_actual: Mapped[Date] = mapped_column(Date, nullable=True)
-    deviation_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    deviation_from_avr: Mapped[float] = mapped_column(Double, nullable=True)
-    deviation_from_contract_prc: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    deviation_from_avr_prc: Mapped[str] = mapped_column(String(length=255), nullable=True)
-    remainder: Mapped[float] = mapped_column(Double, nullable=True)
-    comment: Mapped[str] = mapped_column(String(length=1023), nullable=True)
-    additional_comment: Mapped[str] = mapped_column(String(length=1023), nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    deviation_amount: Mapped[doublenull]
+    deviation_from_avr: Mapped[doublenull]
+    deviation_from_contract_prc: Mapped[vc255]
+    deviation_from_avr_prc: Mapped[vc255]
+    remainder: Mapped[doublenull]
+    comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    additional_comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Employee(Base):
     __tablename__ = 'employee'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
     employee: Mapped[vc255]
     name: Mapped[vc255]
     second_name: Mapped[vc255]
@@ -427,8 +443,8 @@ class Employee(Base):
     wage_rate: Mapped[boolnull]
     salary: Mapped[boolnull]
     rating: Mapped[boolnull]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     legal_claims: Mapped[list["LegalClaims"]] = relationship(
         back_populates="responsible_employee",
@@ -440,10 +456,10 @@ class ContractTRU(Base):
     __tablename__ = 'contract_TRU'
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
     name: Mapped[vc255]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
     legal_claims: Mapped[list["LegalClaims"]] = relationship(
         back_populates="contract_TRU",
@@ -455,7 +471,7 @@ class LegalClaims(Base):
     __tablename__ = 'legal_claims'
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
     
     responsible_employee_id_sm: Mapped[int] = mapped_column(ForeignKey("employee.id_sm", ondelete="NO ACTION"), nullable=True)
     responsible_employee: Mapped["Employee"] = relationship(back_populates="legal_claims")
@@ -463,7 +479,7 @@ class LegalClaims(Base):
     contract_TRU_id_sm: Mapped[int] = mapped_column(ForeignKey("contract_TRU.id_sm", ondelete="NO ACTION"), nullable=True)
     contract_TRU: Mapped['ContractTRU'] = relationship(back_populates="legal_claims")
 
-    conclusion_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    conclusion_date: Mapped[dtnull]
     contract_number: Mapped[vc255]
     applicant: Mapped[vc255]
     defendant: Mapped[vc255]
@@ -474,15 +490,15 @@ class LegalClaims(Base):
     grounds_of_claim: Mapped[vc255]
     result: Mapped[vc255]
     dishonest_supplier: Mapped[boolnull]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Fine(Base):
     __tablename__ = "fines"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="fines")
@@ -492,20 +508,20 @@ class Fine(Base):
     circumstances: Mapped[str] = mapped_column(Text, nullable=True)
     violation_type: Mapped[vc255]
     fine_type: Mapped[vc255]
-    request_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    recognition_amount: Mapped[float] = mapped_column(Double, nullable=True)
+    request_amount: Mapped[doublenull]
+    recognition_amount: Mapped[doublenull]
     fine_number: Mapped[vc255]
-    fine_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    fine_date: Mapped[dtnull]
     decision: Mapped[vc255]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Triggering(Base):
     __tablename__ = "triggerings"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="triggerings")
@@ -519,21 +535,21 @@ class Triggering(Base):
     reason: Mapped[vc255]
     description: Mapped[vc255]
     place: Mapped[vc255]
-    departure_mg: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    departure_time: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    arrival_time: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    departure_mg: Mapped[smallintnull]
+    departure_time: Mapped[dtnull]
+    arrival_time: Mapped[dtnull]
     response_time: Mapped[time] = mapped_column(Time, nullable=True)
     mg_moment_of_actuation: Mapped[vc255]
-    trigger_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    trigger_date: Mapped[dtnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Incident(Base):
     __tablename__ = "incidents"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="incidents")
@@ -546,8 +562,8 @@ class Incident(Base):
     customers_employees: Mapped[boolnull]
     KMGSecurity_employees: Mapped[boolnull]
     contractor_employees: Mapped[boolnull]
-    commit_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    time: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    commit_date: Mapped[dtnull]
+    time: Mapped[dtnull]
     customer: Mapped[vc255]
     amount_of_damage: Mapped[vc255]
     full_name: Mapped[vc255]
@@ -558,15 +574,15 @@ class Incident(Base):
     ERDR: Mapped[vc255]
     SB: Mapped[vc255]
     status: Mapped[vc255]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Shift(Base):
     __tablename__ = "shifts"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="shifts")
@@ -582,15 +598,15 @@ class Shift(Base):
     joined_posts: Mapped[boolnull]
     shift_date: Mapped[date] = mapped_column(Date, nullable=True)
     shift_type: Mapped[vc255]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class TrainingAndMedicalService(Base):
     __tablename__ = 'training_and_medical_services'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="training_and_medical_services")
@@ -599,20 +615,20 @@ class TrainingAndMedicalService(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="training_and_medical_services")
 
-    annual_retraining_of_security_guards_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    anti_terrorism_training_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    fire_technical_minimum_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    annual_medical_examination_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    pre_shift_medical_examination_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    annual_retraining_of_security_guards_quant: Mapped[smallintnull]
+    anti_terrorism_training_quant: Mapped[smallintnull]
+    fire_technical_minimum_quant: Mapped[smallintnull]
+    annual_medical_examination_quant: Mapped[smallintnull]
+    pre_shift_medical_examination_quant: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Transport(Base):
     __tablename__ = "transports"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="transports")
@@ -621,18 +637,18 @@ class Transport(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="transports")
 
-    transport_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    additional_necessary_transport_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    GPS: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    transport_quant: Mapped[smallintnull]
+    additional_necessary_transport_quant: Mapped[smallintnull]
+    GPS: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Journal(Base):
     __tablename__ = "journals"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="journals")
@@ -648,15 +664,15 @@ class Journal(Base):
     acceptance_log_for_premises_delivery: Mapped[boolnull]
     visitor_log: Mapped[boolnull]
     vehicle_registration_log: Mapped[boolnull]
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class ProvidingWorkwears(Base):
     __tablename__ = "providing_workwears"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="providing_workwears")
@@ -665,20 +681,20 @@ class ProvidingWorkwears(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="providing_workwears")
 
-    summer_set: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    winter_set: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    reflective_vets: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    summer_shoes: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    winter_shoes: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    summer_set: Mapped[smallintnull]
+    winter_set: Mapped[smallintnull]
+    reflective_vets: Mapped[smallintnull]
+    summer_shoes: Mapped[smallintnull]
+    winter_shoes: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class CommunicationFacilitiy(Base):
     __tablename__ = "communication_facilities"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="communication_facilities")
@@ -687,18 +703,18 @@ class CommunicationFacilitiy(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="communication_facilities")
 
-    wearable_radios_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    сar_radios_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    stationary_radios_quant: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    wearable_radios_quant: Mapped[smallintnull]
+    сar_radios_quant: Mapped[smallintnull]
+    stationary_radios_quant: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class WeaponAndSpecEquipment(Base):
     __tablename__ = "weapons_and_special_equipments"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[int] = mapped_column(Integer, unique=True)
+    id_sm: Mapped[id_sm_key]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="weapons_and_special_equipments")
@@ -707,18 +723,18 @@ class WeaponAndSpecEquipment(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="weapons_and_special_equipments")
 
-    firearms: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    handcuffs: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    PR73: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    regulatory: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    electric_lantern: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    headlight_finder: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    inspection_mirror: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    detectors_and_metal_detectors: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    binoculars: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    safe_for_storing_weapons: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    wearable_video_recorders: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    car_DVRs: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    cell_phones: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    date_modified: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    date_created: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    firearms: Mapped[smallintnull]
+    handcuffs: Mapped[smallintnull]
+    PR73: Mapped[smallintnull]
+    regulatory: Mapped[smallintnull]
+    electric_lantern: Mapped[smallintnull]
+    headlight_finder: Mapped[smallintnull]
+    inspection_mirror: Mapped[smallintnull]
+    detectors_and_metal_detectors: Mapped[smallintnull]
+    binoculars: Mapped[smallintnull]
+    safe_for_storing_weapons: Mapped[smallintnull]
+    wearable_video_recorders: Mapped[smallintnull]
+    car_DVRs: Mapped[smallintnull]
+    cell_phones: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]

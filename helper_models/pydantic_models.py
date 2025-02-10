@@ -4,44 +4,55 @@ from pydantic import BaseModel, Field
 
 
 class FilialModel(BaseModel):
-    i_id: int | None
-    name_filial: str | None
-    id_sb_object_filial: int | None
-    date: datetime | None
+    id: int | None
+    id_sm: int | None
+    name: str | None
+    latitude: float | None
+    longitude: float | None
+    date_modified: datetime | None
+    date_created: datetime | None
 
 
 class CustomerModel(BaseModel):
-    i_id: int | None
-    name_customer: str | None
-    id_sb_object_zakazchik: int | None
+    id: int | None
+    id_sm: int | None
+    name: str | None
     bin: str | None
-    date: datetime | None
+    status: str | None
+    date_modified: datetime | None
+    date_created: datetime | None
 
 
 class ObjectModel(BaseModel):
-    i_id: int | None
-    id_sb_object_filial: int | None
-    id_sb_object_zakazchik: int | None
-    id_sb_object_object: int | None
-    name_object: str | None
+    id: int | None 
+    id_sm: int | None 
+    filial_id_sm: int | None 
+    customer_id_sm: int | None 
+    contract_id_sm: int | None 
     contract: str | None
-    id_sb_object_dogovor: int | None
+    name: str | None
     contract_date: date | None
     contract_number: str | None
     type: str | None
-    date: datetime | None
+    date_modified: datetime | None
+    date_created: datetime | None
 
 
 class PostModel(BaseModel):
-    i_id: int | None
-    id_sb_object_filial: int | None
-    id_sb_object_zakazchik: int | None
-    id_sb_object_object: int | None
-    id_sb_object_post: int | None
-    name_post: str | None
+    id: int | None
+    id_sm: int | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    object_id_sm: int | None
+    name: str | None
     type: str | None
-    shift_mode: str | int | None
-    date: datetime | None
+    shift_mode: int | None
+    operation_mode: int | None
+    linear_part: str | None
+    length_from: float | None
+    length_to: float | None
+    date_modified: datetime | None
+    date_created: datetime | None
 
 
 class MobGroupModel(BaseModel):
@@ -61,34 +72,31 @@ class MobGroupModel(BaseModel):
 
 
 class SecurityGuardModel(BaseModel):
-    i_id: int | None
-    id_sb_guards: int | None
-    object_name: str | None
+    id: int | None
+    id_sm: int | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    object_id_sm: int | None
     name: str | None
     surname: str | None
+    iin: str | None
+    social_status: str | None
+    status: str | None
     job_title: str | None
     employee_photo: str | None
     gender: str | None
     nationality: str | None
-    customer: str | None
-    date: datetime | None
-    id_sb_object_filial: int | None
-    id_sb_object_zakazchik: int | None
-    id_sb_object_object: int | None
-    iin: str | None
-    social_status: str | None
-    status: str | None
     labor_union: str | None
+    date_modified: datetime | None
+    date_created: datetime | None
 
 
 class IncomeModel(BaseModel):
-    i_id: int
-    id_sb_object_filial: int | None
-    id_sb_object_zakazchik: int | None
-    id_sb_object_object: int | None
-    id_sb_object_dogovor: int | None
-    type_dogovor: str | None
-    status_dogovor: str | None
+    id: int | None
+    filial_id_sm: int | None
+    contract_id_sm: int | None
+    type: str | None
+    status: str | None
     year: int | None
     month: str | None
     contract_amount: float | None
@@ -104,4 +112,5 @@ class IncomeModel(BaseModel):
     remainder: float | None
     comment: str | None
     additional_comment: str | None
-    date: datetime | None
+    date_modified: datetime | None
+    date_created: datetime | None

@@ -1,60 +1,80 @@
 from datetime import datetime, time
-from numbers import Integral
+from typing import Annotated
 
-from sqlalchemy import Integer, DateTime, Float, String, SmallInteger, Numeric, Date, Boolean, Time, Double, \
-    LargeBinary, Text, nulls_last, BigInteger
+from sqlalchemy import Integer, DateTime, String, SmallInteger, Numeric, Date, Boolean, Time, Double, \
+    LargeBinary, Text
+from sqlalchemy.dialects.mysql import MEDIUMTEXT, BLOB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database.simbase_database import Base
 
 
+pk = Annotated[int, mapped_column(Integer, primary_key=True)]
+id_sm_key = Annotated[int, mapped_column(Integer, unique=True)]
+vc255 = Annotated[str, mapped_column(String(length=255), nullable=True)]
+boolnull = Annotated[bool, mapped_column(Boolean, nullable=True)]
+doublenull = Annotated[float, mapped_column(Double, nullable=True)]
+dtnull = Annotated[datetime, mapped_column(DateTime, nullable=True)]
+intnull = Annotated[int, mapped_column(Integer, nullable=True)]
+smallintnull = Annotated[int, mapped_column(SmallInteger, nullable=True)]
+
+
 class Filial(Base):
     __tablename__ = "filial"
 
-    i_id: Mapped[int] = mapped_column(primary_key=True)
-    name_filial: Mapped[str] = mapped_column(Text)
-    id_sb_object_filial: Mapped[int]
-    date: Mapped[datetime]
+    id: Mapped[pk]
+    id_sm: Mapped[int]
+    name: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Customer(Base):
     __tablename__ = "customers"
 
-    i_id: Mapped[int] = mapped_column(primary_key=True)
-    name_customer: Mapped[str] = mapped_column(Text)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, unique=True)
-    bin: Mapped[str] = mapped_column(Text)
-    date: Mapped[datetime]
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[id_sm_key]
+    name: Mapped[vc255]
+    bin: Mapped[vc255]
+    status: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Object(Base):
     __tablename__ = 'objects'
 
-    i_id: Mapped[int] = mapped_column(primary_key=True)
-    id_sb_object_filial: Mapped[int]
-    id_sb_object_zakazchik: Mapped[int]
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, unique=True)
-    name_object: Mapped[str] = mapped_column(Text, nullable=True)
-    contract: Mapped[str] = mapped_column(Text)
-    id_sb_object_dogovor: Mapped[int]
-    contract_date: Mapped[Date] = mapped_column(Date)
-    contract_number: Mapped[str] = mapped_column(Text, nullable=True)
-    type: Mapped[str] = mapped_column(Text)
-    date: Mapped[datetime]
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[id_sm_key]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    contract_id_sm: Mapped[intnull]
+    contract: Mapped[vc255]
+    name: Mapped[vc255]
+    contract_date: Mapped[Date] = mapped_column(Date, nullable=True)
+    contract_number: Mapped[vc255]
+    type: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Post(Base):
     __tablename__ = 'posts'
 
-    i_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    id_sb_object_filial: Mapped[int]
-    id_sb_object_zakazchik: Mapped[int]
-    id_sb_object_object: Mapped[int]
-    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    name_post: Mapped[str] = mapped_column(Text)
-    type: Mapped[str] = mapped_column(Text)
-    shift_mode: Mapped[str]
-    date: Mapped[datetime]
+    id: Mapped[pk]
+    id_sm: Mapped[id_sm_key]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    object_id_sm: Mapped[intnull]
+    name: Mapped[vc255]
+    type: Mapped[vc255]
+    shift_mode: Mapped[intnull]
+    operation_mode: Mapped[intnull]
+    linear_part: Mapped[str] = mapped_column(MEDIUMTEXT, nullable=True)
+    length_from: Mapped[doublenull]
+    length_to: Mapped[doublenull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class MobileGroup(Base):
@@ -97,31 +117,30 @@ class Triggering(Base):
 
 
 class Income(Base):
-    __tablename__ = "income"
+    __tablename__ = "income_payments"
 
-    i_id: Mapped[int] = mapped_column(primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_dogovor: Mapped[int] = mapped_column(Integer, nullable=True)
-    type_dogovor: Mapped[str] = mapped_column(Text, nullable=True)
-    status_dogovor: Mapped[str] = mapped_column(Text, nullable=True)
-    year: Mapped[int] = mapped_column(Integer, nullable=True)
-    month: Mapped[str] = mapped_column(Text, nullable=True)
-    contract_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    additional_agreement_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    amount_avr: Mapped[float] = mapped_column(Double, nullable=True)
+    id: Mapped[pk]
+    filial_id_sm: Mapped[intnull]
+    contract_id_sm: Mapped[intnull]
+    type: Mapped[vc255]
+    status: Mapped[vc255]
+    year: Mapped[intnull]
+    month: Mapped[vc255]
+    contract_amount: Mapped[doublenull]
+    additional_agreement_amount: Mapped[doublenull]
+    amount_avr: Mapped[doublenull]
     payment_date_avr: Mapped[Date] = mapped_column(Date, nullable=True)
-    actual_payment: Mapped[float] = mapped_column(Double, nullable=True)
+    actual_payment: Mapped[doublenull]
     payment_date_actual: Mapped[Date] = mapped_column(Date, nullable=True)
-    deviation_amount: Mapped[float] = mapped_column(Double, nullable=True)
-    deviation_from_avr: Mapped[float] = mapped_column(Double, nullable=True)
-    deviation_from_contract_prc: Mapped[str] = mapped_column(Text, nullable=True)
-    deviation_from_avr_prc: Mapped[str] = mapped_column(Text, nullable=True)
-    remainder: Mapped[float] = mapped_column(Double, nullable=True)
-    comment: Mapped[str] = mapped_column(Text, nullable=True)
-    additional_comment: Mapped[str] = mapped_column(Text, nullable=True)
-    date: Mapped[datetime]
+    deviation_amount: Mapped[doublenull]
+    deviation_from_avr: Mapped[doublenull]
+    deviation_from_contract_prc: Mapped[vc255]
+    deviation_from_avr_prc: Mapped[vc255]
+    remainder: Mapped[doublenull]
+    comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    additional_comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Car(Base):
@@ -432,24 +451,23 @@ class RouteSheet(Base):
 class SecurityGuard(Base):
     __tablename__ = "security_guards"
 
-    i_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    id_sb_guards: Mapped[int] = mapped_column(Integer)
-    object_name: Mapped[str] = mapped_column(Text, nullable=True)
-    name: Mapped[str] = mapped_column(Text, nullable=True)
-    surname: Mapped[str] = mapped_column(Text, nullable=True)
-    job_title: Mapped[str] = mapped_column(Text, nullable=True)
-    employee_photo: Mapped[LargeBinary] = mapped_column(LargeBinary, nullable=True)
-    gender: Mapped[str] = mapped_column(Text, nullable=True)
-    nationality: Mapped[str] = mapped_column(Text, nullable=True)
-    customer: Mapped[str] = mapped_column(Text, nullable=True)
-    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
-    iin: Mapped[str] = mapped_column(Text, nullable=True)
-    social_status: Mapped[str] = mapped_column(Text, nullable=True)
-    status: Mapped[str] = mapped_column(Text, nullable=True)
-    labor_union: Mapped[str] = mapped_column(Text, nullable=True)
+    id: Mapped[pk]
+    id_sm: Mapped[id_sm_key]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    object_id_sm: Mapped[intnull]
+    name: Mapped[vc255]
+    surname: Mapped[vc255]
+    iin: Mapped[vc255]
+    social_status: Mapped[vc255]
+    status: Mapped[vc255]
+    job_title: Mapped[vc255]
+    employee_photo: Mapped[BLOB] = mapped_column(BLOB, nullable=True)
+    gender: Mapped[vc255]
+    nationality: Mapped[vc255]
+    labor_union: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class ShiftSchedule(Base):

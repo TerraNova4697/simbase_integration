@@ -17,19 +17,22 @@ class Superset:
     def consume_filials(self, filials: list[Filial]) -> None:
         for filial in filials:
             SsFilialOrm.create(
-                id_sm=filial.id_sb_object_filial,
-                name=filial.name_filial,
-                date=filial.date,
+                id_sm=filial.id_sm,
+                name=filial.name,
+                date_modified=filial.date_modified,
+                date_created=filial.date_created,
                 model=filial
             )
 
     def consume_customers(self, customers: list[Customer]) -> None:
         for customer in customers:
             SsCustomerOrm.create(
-                id_sm=customer.id_sb_object_zakazchik,
-                name=customer.name_customer,
+                id_sm=customer.id_sm,
+                name=customer.name,
                 bin=customer.bin,
-                date=customer.date,
+                status=customer.status,
+                date_modified=customer.date_modified,
+                date_created=customer.date_created,
                 model=customer
             )
 
@@ -37,39 +40,46 @@ class Superset:
     def consume_objects(self, objects: list[Object]) -> None:
         for object in objects:
             SsObjectOrm.create(
-                id_sm=object.id_sb_object_object,
-                filial_id_sm=object.id_sb_object_filial,
-                customer_id_sm=object.id_sb_object_zakazchik,
-                contract=object.contract,
-                name=object.name_object,
+                id_sm=object.id_sm,
+                filial_id_sm=object.filial_id_sm,
+                customer_id_sm=object.customer_id_sm,
+                contract_id_sm=object.contract_id_sm,
+                contract_name=object.contract,
+                name=object.name,
                 contract_date=object.contract_date,
                 contract_number=object.contract_number,
                 type=object.type,
-                date=object.date,
+                date_modified=object.date_modified,
+                date_created=object.date_created,
                 model=object
             )
 
     def consume_posts(self, posts: list[Post]) -> None:
         for post in posts:
             SsPostOrm.create(
-                id_sm=post.id_sb_object_post,
-                filial_id_sm=post.id_sb_object_filial,
-                customer_id_sm=post.id_sb_object_zakazchik,
-                object_id_sm=post.id_sb_object_object,
-                name=post.name_post,
+                id_sm=post.id_sm,
+                filial_id_sm=post.filial_id_sm,
+                customer_id_sm=post.customer_id_sm,
+                object_id_sm=post.object_id_sm,
+                name=post.name,
                 type=post.type,
                 shift_mode=post.shift_mode,
-                date=post.date,
+                operation_mode=post.operation_mode,
+                linear_part=post.linear_part,
+                length_from=post.length_from,
+                length_to=post.length_to,
+                date_modified=post.date_modified,
+                date_created=post.date_created,
                 model=post
             )
 
     def consume_security_guards(self, guards: list[SecurityGuard]) -> None:
         for guard in guards:
             SsSecurityGuardOrm.create(
-                id_sm=guard.id_sb_guards,
-                filial_id_sm=guard.id_sb_object_filial,
-                customer_id_sm=guard.id_sb_object_zakazchik,
-                object_id_sm=guard.id_sb_object_object,
+                id_sm=guard.id_sm,
+                filial_id_sm=guard.filial_id_sm,
+                customer_id_sm=guard.customer_id_sm,
+                object_id_sm=guard.object_id_sm,
                 name=guard.name,
                 surname=guard.surname,
                 iin=guard.iin,
@@ -80,20 +90,18 @@ class Superset:
                 gender=guard.gender,
                 nationality=guard.nationality,
                 labor_union=guard.labor_union,
-                date=guard.date,
+                date_modified=guard.date_modified,
+                date_created=guard.date_created,
                 model=guard
             )
 
     def consume_income(self, income: list[Income]) -> None:
         for inc in income:
             SsIncomeOrm.create(
-                id_sm=None,
-                filial_id_sm=inc.id_sb_object_filial,
-                customer_id_sm=inc.id_sb_object_zakazchik,
-                object_id_sm=inc.id_sb_object_object,
-                contract_id_sm=inc.id_sb_object_dogovor,
-                type=inc.type_dogovor,
-                status=inc.status_dogovor,
+                filial_id_sm=inc.filial_id_sm,
+                contract_id_sm=inc.contract_id_sm,
+                type=inc.type,
+                status=inc.status,
                 year=inc.year,
                 month=inc.month,
                 contract_amount=inc.contract_amount,
@@ -109,8 +117,8 @@ class Superset:
                 remainder=inc.remainder,
                 comment=inc.comment,
                 additional_comment=inc.additional_comment,
-                date_modified=inc.date,
-                date_created=inc.date,
+                date_modified=inc.date_modified,
+                date_created=inc.date_created,
                 model=inc
             )
 
