@@ -35,7 +35,7 @@ class SqlError(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     exception: Mapped[str] = mapped_column(String(length=8191))
     traceback: Mapped[str] = mapped_column(String(length=8191))
-    sql: Mapped[str] = mapped_column(String(length=511))
+    sql: Mapped[str] = mapped_column(String(length=2047))
     target_model: Mapped[str] = mapped_column(String(length=127))
     source_object: Mapped[dict] = mapped_column(JSON)
 
