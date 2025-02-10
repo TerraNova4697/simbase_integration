@@ -135,17 +135,9 @@ class Customer(Base):
         back_populates='customer',
         primaryjoin="Customer.id_sm == Object.customer_id_sm",
     )
-    # mob_groups: Mapped[list["MobGroup"]] = relationship(
-    #     back_populates='customer',
-    #     primaryjoin="Customer.id_sm == MobGroup.customer_id_sm",
-    # )
     security_guards: Mapped[list["SecurityGuard"]] = relationship(
         back_populates="customer",
         primaryjoin="Customer.id_sm == SecurityGuard.customer_id_sm",
-    )
-    income: Mapped[list["Income"]] = relationship(
-        back_populates="customer",
-        primaryjoin="Customer.id_sm == Income.customer_id_sm",
     )
     fines: Mapped[list["Fine"]] = relationship(
         back_populates="customer",
@@ -237,17 +229,9 @@ class Object(Base):
         back_populates='object',
         primaryjoin="Object.id_sm == Post.object_id_sm",
     )
-    # mob_groups: Mapped[list["MobGroup"]] = relationship(
-    #     back_populates='object',
-    #     primaryjoin="Object.id_sm == MobGroup.object_id_sm",
-    # )
     security_guards: Mapped[list["SecurityGuard"]] = relationship(
         back_populates="object",
         primaryjoin="Object.id_sm == SecurityGuard.object_id_sm",
-    )
-    income: Mapped[list["Income"]] = relationship(
-        back_populates="object",
-        primaryjoin="Object.id_sm == Income.object_id_sm",
     )
     triggerings: Mapped[list["Triggering"]] = relationship(
         back_populates="object",
