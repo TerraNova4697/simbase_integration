@@ -64,7 +64,7 @@ class Superset:
                 name=post.name,
                 type=post.type,
                 shift_mode=post.shift_mode,
-                operation_mode=post.operation_mode,
+                operating_mode=post.operating_mode,
                 linear_part=post.linear_part,
                 length_from=post.length_from,
                 length_to=post.length_to,
