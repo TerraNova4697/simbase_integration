@@ -161,7 +161,7 @@ class ShiftSchema(BaseModel):
     security_guard_id_sm: int | None
     security_guard_replaced_id_sm: int | None
     joined_posts: int | None
-    shift_date: int | None
+    shift_date: date | None
     shift_type: str | None
     date_modified: datetime | None
     date_created: datetime | None
