@@ -5,7 +5,6 @@ from sqlalchemy.exc import IntegrityError
 
 from database.superset_database import superset_session_factory
 from database.superset_models import SqlError
-from logger import logger
 
 
 class BaseOrm:
@@ -36,7 +35,7 @@ class BaseOrm:
             traceback=format_exc(),
             sql=sql_query,
             target_model=cls.target_model.__name__,
-            source_obj=source_obj)
+            source_object=source_obj)
         )
         session.commit()
         

@@ -1,16 +1,9 @@
-from sqlalchemy import select, and_, insert
-from sqlalchemy.exc import IntegrityError
-from sqlalchemy.orm import joinedload
-from datetime import date, timedelta
-from traceback import format_exc
+from sqlalchemy import select
 
 from database.models import Triggering
-from database.superset_models import Triggering as SsTriggering, SqlError
+from database.superset_models import Triggering as SsTriggering
 from database.simbase_database import session_factory
-from database.superset_database import superset_session_factory
 from database.queries import BaseOrm
-from logger import logger
-from helper_models import TriggeringModel
 
 
 class SsTriggeringOrm(BaseOrm):

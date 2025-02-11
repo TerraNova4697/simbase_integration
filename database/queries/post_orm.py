@@ -2,36 +2,14 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 
 from database.models import Post
-from database.superset_models import Post as SsPost, SqlError
+from database.superset_models import Post as SsPost
 from database.simbase_database import session_factory
-from database.superset_database import superset_session_factory
+from database.queries.base_orm import BaseOrm
 from logger import logger
-from helper_models import PostModel
-
-from traceback import format_exc
 
 
-class SsPostOrm:
-
-    @staticmethod
-    def create(**kwargs):
-        with superset_session_factory() as session:
-            initial_model = kwargs.pop("model")
-            try:
-                obj = SsPost(**kwargs)
-                session.add(obj)
-                session.commit()
-            except IntegrityError as exc:
-                session.rollback()
-                compiled = obj.__table__.insert().values(**kwargs).compile(compile_kwargs={"literal_binds": True})
-                session.add(SqlError(
-                    exception=str(exc.__class__),
-                    traceback=format_exc(),
-                    sql=str(compiled),
-                    target_model=SsPost.__name__,
-                    source_object=PostModel.model_validate(initial_model, from_attributes=True).model_dump(mode="json")
-                ))
-                session.commit()
+class SsPostOrm(BaseOrm):
+    target_model = SsPost
 
 
 class PostOrm:

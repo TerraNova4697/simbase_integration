@@ -1,9 +1,9 @@
 from datetime import datetime, date, time
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
-class FilialModel(BaseModel):
+class FilialSchema(BaseModel):
     id: int | None
     id_sm: int | None
     name: str | None
@@ -13,7 +13,7 @@ class FilialModel(BaseModel):
     date_created: datetime | None
 
 
-class CustomerModel(BaseModel):
+class CustomerSchema(BaseModel):
     id: int | None
     id_sm: int | None
     name: str | None
@@ -23,7 +23,7 @@ class CustomerModel(BaseModel):
     date_created: datetime | None
 
 
-class ObjectModel(BaseModel):
+class ObjectSchema(BaseModel):
     id: int | None 
     id_sm: int | None 
     filial_id_sm: int | None 
@@ -38,7 +38,7 @@ class ObjectModel(BaseModel):
     date_created: datetime | None
 
 
-class PostModel(BaseModel):
+class PostSchema(BaseModel):
     id: int | None
     id_sm: int | None
     filial_id_sm: int | None
@@ -55,7 +55,7 @@ class PostModel(BaseModel):
     date_created: datetime | None
 
 
-class MobGroupModel(BaseModel):
+class MobGroupSchema(BaseModel):
     i_id: int | None
     id_sb_object_filial: int | None
     id_sb_object_zakazchik: int | None
@@ -71,7 +71,7 @@ class MobGroupModel(BaseModel):
     date: datetime | None
 
 
-class SecurityGuardModel(BaseModel):
+class SecurityGuardSchema(BaseModel):
     id: int | None
     id_sm: int | None
     filial_id_sm: int | None
@@ -91,7 +91,7 @@ class SecurityGuardModel(BaseModel):
     date_created: datetime | None
 
 
-class IncomeModel(BaseModel):
+class IncomeSchema(BaseModel):
     id: int | None
     filial_id_sm: int | None
     contract_id_sm: int | None
@@ -116,7 +116,7 @@ class IncomeModel(BaseModel):
     date_created: datetime | None
 
 
-class ContractModel(BaseModel):
+class ContractSchema(BaseModel):
     id: int | None
     id_sm: int | None
     start_date: date | None
@@ -130,7 +130,7 @@ class ContractModel(BaseModel):
     date_created: datetime | None
 
 
-class TriggeringModel(BaseModel):
+class TriggeringSchema(BaseModel):
     id: int | None
     id_sm: int | None
     filial_id_sm: int | None

@@ -21,7 +21,6 @@ class TaskRunner:
             self.fetch_income,
             self.fetch_contracts,
             self.fetch_triggerings,
-            # self.fetch_route_sheet,
         ]
 
     async def run_tasks(self):
