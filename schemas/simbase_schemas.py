@@ -1,6 +1,7 @@
 from datetime import datetime, date, time
+from typing import Any
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class FilialSchema(BaseModel):
@@ -29,7 +30,7 @@ class ObjectSchema(BaseModel):
     filial_id_sm: int | None 
     customer_id_sm: int | None 
     contract_id_sm: int | None 
-    contract: str | None
+    contract_name: str | None = Field(validation_alias="contract")
     name: str | None
     contract_date: date | None
     contract_number: str | None
@@ -83,7 +84,7 @@ class SecurityGuardSchema(BaseModel):
     social_status: str | None
     status: str | None
     job_title: str | None
-    employee_photo: str | None
+    employee_photo: Any
     gender: str | None
     nationality: str | None
     labor_union: str | None
