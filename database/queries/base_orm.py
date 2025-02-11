@@ -9,12 +9,13 @@ from database.superset_models import SqlError
 
 class BaseOrm:
     target_model = None
+    exclude = {"id"}
 
     @classmethod
     def create_from_schema(cls, schema: BaseModel) -> None:
         with superset_session_factory() as session:
             try:
-                values = schema.model_dump(exclude={"id"})
+                values = schema.model_dump(exclude=cls.exclude)
                 model = cls.target_model(**values)
                 session.add(model)
                 session.commit()

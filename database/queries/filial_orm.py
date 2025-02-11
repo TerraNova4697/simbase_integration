@@ -9,6 +9,7 @@ from database.queries.base_orm import BaseOrm
 
 class SsFilialOrm(BaseOrm):
     target_model = SsFilial
+    exclude = {"id", "latitude", "longitude"}
 
 
 class FilialOrm:
