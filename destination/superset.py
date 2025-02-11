@@ -7,7 +7,9 @@ from database.queries import (
     SsSecurityGuardOrm,
     SsIncomeOrm,
     SsContractOrm,
+    SsTriggeringOrm
 )
+from helper_models.pydantic_models import TriggeringModel
 
 
 class Superset:
@@ -139,6 +141,10 @@ class Superset:
                 model=contract,
             )
 
+    def consume_triggerings(self, triggerings: list[Triggering]) -> None:
+        for triggering in triggerings:
+            schema = TriggeringModel.model_validate(triggering, from_attributes=True)
+            SsTriggeringOrm.create_from_schema(schema)
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
         pass
