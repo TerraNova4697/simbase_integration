@@ -7,7 +7,8 @@ from database.queries import (
     SsSecurityGuardOrm,
     SsIncomeOrm,
     SsContractOrm,
-    SsTriggeringOrm
+    SsTriggeringOrm,
+    SsShiftOrm
 )
 from schemas.simbase_schemas import *
 
@@ -56,6 +57,11 @@ class Superset:
         for triggering in triggerings:
             schema = TriggeringSchema.model_validate(triggering, from_attributes=True)
             SsTriggeringOrm.create_from_schema(schema)
+
+    def consume_shifts(self, shifts: list[Shift]) -> None:
+        for shift in shifts:
+            schema = ShiftSchema.model_validate(shift, from_attributes=True)
+            SsShiftOrm.create_from_schema(schema)
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
         pass

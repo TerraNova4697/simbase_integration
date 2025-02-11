@@ -9,3 +9,4 @@ from .security_guard_orm import SecurityGuardOrm, SsSecurityGuardOrm
 from .income_orm import IncomeOrm, SsIncomeOrm
 from .contract_orm import ContractOrm, SsContractOrm
 from .triggering_orm import TriggeringOrm, SsTriggeringOrm
+from .shifts_orm import ShiftOrm, SsShiftOrm

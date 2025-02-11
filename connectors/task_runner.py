@@ -16,11 +16,12 @@ class TaskRunner:
             self.fetch_filials,
             self.fetch_customers,
             self.fetch_contracts,
-            self.fetch_objects,  # -
+            self.fetch_objects,
             self.fetch_posts,
             self.fetch_security_guards,
-            self.fetch_income,  # -
+            self.fetch_income,
             self.fetch_triggerings,
+            self.fetch_shifts
         ]
 
     async def run_tasks(self):
@@ -94,6 +95,12 @@ class TaskRunner:
         simbase_triggerings = TriggeringOrm.all()
         self.superset.consume_triggerings(simbase_triggerings)
         logger.info("Fetched triggerings")
+
+    @try_times(number_of_tries=3)
+    async def fetch_shifts(self):
+        simbase_shifts = ShiftOrm.all()
+        self.superset.consume_shifts(simbase_shifts)
+        logger.info("Fetched shifts")
 
     @try_times(number_of_tries=3)
     async def fetch_employees(self):

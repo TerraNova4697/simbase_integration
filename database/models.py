@@ -592,3 +592,20 @@ class WeaponsAndSpecialEquipment(Base):
     car_dvr: Mapped[int] = mapped_column(Integer, nullable=True)
     cell_phones: Mapped[int] = mapped_column(Integer, nullable=True)
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+
+
+class Shift(Base):
+    __tablename__ = "shifts"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[intnull]
+    filial_id_sm: Mapped[intnull]
+    object_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+    security_guard_id_sm: Mapped[intnull]
+    security_guard_replaced_id_sm: Mapped[intnull]
+    joined_posts: Mapped[boolnull]
+    shift_date: Mapped[Date] = mapped_column(Date, nullable=True)
+    shift_type: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
