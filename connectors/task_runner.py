@@ -19,6 +19,8 @@ class TaskRunner:
             self.fetch_posts,
             self.fetch_security_guards,
             self.fetch_income,
+            self.fetch_contracts,
+            self.fetch_triggerings,
             # self.fetch_route_sheet,
         ]
 
@@ -77,7 +79,23 @@ class TaskRunner:
         logger.info("Fetched security guards")
 
     @try_times(number_of_tries=3)
+    async def fetch_contracts(self):
+        simbase_contracts = ContractOrm.all()
+        self.superset.consume_contracts(simbase_contracts)
+        logger.info("Fetched contracts")
+
+    @try_times(number_of_tries=3)
     async def fetch_income(self):
         simbase_income = IncomeOrm.all()
         self.superset.consume_income(simbase_income)
         logger.info("Fetched income")
+
+    @try_times(number_of_tries=3)
+    async def fetch_triggerings(self):
+        simbase_triggerings = TriggeringOrm.all()
+        self.superset.consume_triggerings(simbase_triggerings)
+        logger.info("Fetched triggerings")
+
+    @try_times(number_of_tries=3)
+    async def fetch_employees(self):
+        pass

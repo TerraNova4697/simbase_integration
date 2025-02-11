@@ -96,24 +96,26 @@ class MobileGroup(Base):
 
 
 class Triggering(Base):
-    __tablename__ = 'triggering'
+    __tablename__ = 'triggerings'
 
-    i_id: Mapped[int] = mapped_column(primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_object: Mapped[int] = mapped_column(Integer, nullable=True)
-    name_customer: Mapped[str] = mapped_column(Text, nullable=True)
-    type: Mapped[str] = mapped_column(Text, nullable=True)
-    reason: Mapped[str] = mapped_column(Text, nullable=True)
-    place: Mapped[str] = mapped_column(Text, nullable=True)
-    description: Mapped[str] = mapped_column(Text, nullable=True)
-    departure_mg: Mapped[bool] = mapped_column(Boolean, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    departure_time: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    arrival_time: Mapped[datetime] = mapped_column(DateTime, nullable=True)
-    description_of_additional_check: Mapped[str] = mapped_column(Text, nullable=True)
+    id: Mapped[pk]
+    id_sm: Mapped[intnull]
+    filial_id_sm: Mapped[intnull]
+    object_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+    type: Mapped[vc255]
+    customer: Mapped[vc255]
+    reason: Mapped[vc255]
+    description: Mapped[vc255]
+    place: Mapped[vc255]
+    departure_mg: Mapped[smallintnull]
+    departure_time: Mapped[dtnull]
+    arrival_time: Mapped[dtnull]
     response_time: Mapped[time] = mapped_column(Time, nullable=True)
-    mg_moment_of_actuation: Mapped[str] = mapped_column(Text, nullable=True)
-    trigger_date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    mg_moment_of_actuation: Mapped[vc255]
+    trigger_date: Mapped[dtnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Income(Base):
@@ -141,6 +143,25 @@ class Income(Base):
     additional_comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
+
+
+class Contract(Base):
+    __tablename__ = "contracts"
+
+    id: Mapped[pk]
+    id_sm: Mapped[intnull]
+    start_date: Mapped[Date] = mapped_column(Date, nullable=True)
+    warning_date: Mapped[Date] = mapped_column(Date, nullable=True)
+    end_date: Mapped[Date] = mapped_column(Date, nullable=True)
+    customer_id_sm: Mapped[intnull]
+    name: Mapped[vc255]
+    type: Mapped[vc255]
+    contract_number: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
+
+
+
 
 
 class Car(Base):

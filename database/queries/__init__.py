@@ -6,3 +6,5 @@ from .post_orm import PostOrm, SsPostOrm
 from .route_sheet_orm import RouteSheetOrm
 from .security_guard_orm import SecurityGuardOrm, SsSecurityGuardOrm
 from .income_orm import IncomeOrm, SsIncomeOrm
+from .contract_orm import ContractOrm, SsContractOrm
+from .triggering_orm import TriggeringOrm, SsTriggeringOrm

@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, time
 
 from pydantic import BaseModel, Field
 
@@ -112,5 +112,40 @@ class IncomeModel(BaseModel):
     remainder: float | None
     comment: str | None
     additional_comment: str | None
+    date_modified: datetime | None
+    date_created: datetime | None
+
+
+class ContractModel(BaseModel):
+    id: int | None
+    id_sm: int | None
+    start_date: date | None
+    warning_date: date | None
+    end_date: date | None
+    customer_id_sm: int | None
+    name: str | None
+    type: str | None
+    contract_number: str | None
+    date_modified: datetime | None
+    date_created: datetime | None
+
+
+class TriggeringModel(BaseModel):
+    id: int | None
+    id_sm: int | None
+    filial_id_sm: int | None
+    object_id_sm: int | None
+    post_id_sm: int | None
+    type: str | None
+    customer: str | None
+    reason: str | None
+    description: str | None
+    place: str | None
+    departure_mg: int | None
+    departure_time: datetime | None
+    arrival_time: datetime | None
+    response_time: time | None
+    mg_moment_of_actuation: str | None
+    trigger_date: datetime | None
     date_modified: datetime | None
     date_created: datetime | None

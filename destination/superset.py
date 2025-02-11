@@ -5,7 +5,8 @@ from database.queries import (
     SsObjectOrm,
     SsPostOrm,
     SsSecurityGuardOrm,
-    SsIncomeOrm
+    SsIncomeOrm,
+    SsContractOrm,
 )
 
 
@@ -121,6 +122,23 @@ class Superset:
                 date_created=inc.date_created,
                 model=inc
             )
+
+    def consume_contracts(self, contracts: list[Contract]) -> None:
+        for contract in contracts:
+            SsContractOrm.create(
+                id_sm=contract.id_sm,
+                start_date=contract.start_date,
+                warning_date=contract.warning_date,
+                end_date=contract.end_date,
+                customer_id_sm=contract.customer_id_sm,
+                name=contract.name,
+                type=contract.type,
+                contract_number=contract.contract_number,
+                date_modified=contract.date_modified,
+                date_created=contract.date_created,
+                model=contract,
+            )
+
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
         pass
