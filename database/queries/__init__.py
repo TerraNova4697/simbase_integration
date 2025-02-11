@@ -1,3 +1,4 @@
+from .base_orm import BaseOrm
 from .filial_orm import FilialOrm, SsFilialOrm
 from .customer_orm import CustomerOrm, SsCustomerOrm
 from .object_orm import ObjectOrm, SsObjectOrm
