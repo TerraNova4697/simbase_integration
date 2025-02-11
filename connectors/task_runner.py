@@ -15,11 +15,11 @@ class TaskRunner:
         self.tasks_table = [
             self.fetch_filials,
             self.fetch_customers,
-            self.fetch_objects,
+            self.fetch_contracts,
+            self.fetch_objects,  # -
             self.fetch_posts,
             self.fetch_security_guards,
-            self.fetch_income,
-            self.fetch_contracts,
+            self.fetch_income,  # -
             self.fetch_triggerings,
         ]
 
