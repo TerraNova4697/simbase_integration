@@ -432,20 +432,20 @@ class Employee(Base):
     )
 
 
-class ContractTRU(Base):
-    __tablename__ = 'contract_TRU'
+# class ContractTRU(Base):
+#     __tablename__ = 'contract_tru'
     
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
-    name: Mapped[vc255]
-    sm_state: Mapped[vc255]
-    date_modified: Mapped[dtnull]
-    date_created: Mapped[dtnull]
+#     id: Mapped[int] = mapped_column(Integer, primary_key=True)
+#     id_sm: Mapped[id_sm_key]
+#     name: Mapped[vc255]
+#     sm_state: Mapped[vc255]
+#     date_modified: Mapped[dtnull]
+#     date_created: Mapped[dtnull]
 
-    legal_claims: Mapped[list["LegalClaims"]] = relationship(
-        back_populates="contract_TRU",
-        primaryjoin="ContractTRU.id_sm == LegalClaims.contract_TRU_id_sm",
-    )
+#     legal_claims: Mapped[list["LegalClaims"]] = relationship(
+#         back_populates="contract_tru",
+#         primaryjoin="ContractTRU.id_sm == LegalClaims.contract_tru_id_sm",
+#     )
 
 
 class LegalClaims(Base):
@@ -457,8 +457,8 @@ class LegalClaims(Base):
     responsible_employee_id_sm: Mapped[int] = mapped_column(ForeignKey("employee.id_sm", ondelete="NO ACTION"), nullable=True)
     responsible_employee: Mapped["Employee"] = relationship(back_populates="legal_claims")
 
-    contract_TRU_id_sm: Mapped[int] = mapped_column(ForeignKey("contract_TRU.id_sm", ondelete="NO ACTION"), nullable=True)
-    contract_TRU: Mapped['ContractTRU'] = relationship(back_populates="legal_claims")
+    # contract_tru_id_sm: Mapped[int] = mapped_column(ForeignKey("contract_tru.id_sm", ondelete="NO ACTION"), nullable=True)
+    # contract_tru: Mapped['ContractTRU'] = relationship(back_populates="legal_claims")
 
     sm_state: Mapped[vc255]
     conclusion_date: Mapped[dtnull]
