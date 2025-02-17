@@ -24,8 +24,8 @@ class TaskRunner:
             self.fetch_shifts,
             self.fetch_fines,
             self.fetch_employees,
-            self.fetch_legal_claims,
             self.fetch_contract_trus,
+            self.fetch_legal_claims,
         ]
 
     async def run_tasks(self):
