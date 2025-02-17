@@ -170,8 +170,8 @@ class ShiftSchema(BaseModel):
 class ContractTRUSchema(BaseModel):
     id: int | None
     id_sm: int | None
-    name:int | None
-    sm_state:int | None
+    name: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
