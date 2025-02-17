@@ -438,6 +438,7 @@ class ContractTRU(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     id_sm: Mapped[id_sm_key]
     name: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -459,6 +460,7 @@ class LegalClaims(Base):
     contract_TRU_id_sm: Mapped[int] = mapped_column(ForeignKey("contract_TRU.id_sm", ondelete="NO ACTION"), nullable=True)
     contract_TRU: Mapped['ContractTRU'] = relationship(back_populates="legal_claims")
 
+    sm_state: Mapped[vc255]
     conclusion_date: Mapped[dtnull]
     contract_number: Mapped[vc255]
     applicant: Mapped[vc255]

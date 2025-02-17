@@ -21,7 +21,11 @@ class TaskRunner:
             self.fetch_security_guards,
             self.fetch_income,
             self.fetch_triggerings,
-            self.fetch_shifts
+            self.fetch_shifts,
+            self.fetch_fines,
+
+            self.fetch_legal_claims,
+            self.fetch_contract_trus,
         ]
 
     async def run_tasks(self):
@@ -101,6 +105,24 @@ class TaskRunner:
         simbase_shifts = ShiftOrm.all()
         self.superset.consume_shifts(simbase_shifts)
         logger.info("Fetched shifts")
+
+    @try_times(number_of_tries=3)
+    async def fetch_fines(self):
+        simbase_fines = FineOrm.all()
+        self.superset.consume_fines(simbase_fines)
+        logger.info("Fetched fines")
+
+    @try_times(number_of_tries=3)
+    async def fetch_legal_claims(self):
+        simbase_legal_claims = LegalClaimsOrm.all()
+        self.superset.consume_legal_claims(simbase_legal_claims)
+        logger.info("Fetched legal claims")
+
+    @try_times(number_of_tries=3)
+    async def fetch_contract_trus(self):
+        simbase_contract_trus = ContractTRUOrm.all()
+        self.superset.consume_contract_trus(simbase_contract_trus)
+        logger.info("Fetched contract TRUs")
 
     @try_times(number_of_tries=3)
     async def fetch_employees(self):

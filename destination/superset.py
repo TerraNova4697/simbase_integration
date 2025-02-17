@@ -8,7 +8,9 @@ from database.queries import (
     SsIncomeOrm,
     SsContractOrm,
     SsTriggeringOrm,
-    SsShiftOrm
+    SsShiftOrm,
+    SsFineOrm,
+    SsLegalClaimsOrm,
 )
 from schemas.simbase_schemas import *
 
@@ -62,6 +64,21 @@ class Superset:
         for shift in shifts:
             schema = ShiftSchema.model_validate(shift, from_attributes=True)
             SsShiftOrm.create_from_schema(schema)
+
+    def consume_fines(self, fines: list[Fine]) -> None:
+        for fine in fines:
+            schema = FineSchema.model_validate(fine, from_attributes=True)
+            SsFineOrm.create_from_schema(schema)
+
+    def consume_legal_claims(self, legal_claims: list[LegalClaims]) -> None:
+        for lc in legal_claims:
+            schema = LegalClaimsSchema.model_validate(lc, from_attributes=True)
+            SsLegalClaimsOrm.create_from_schema(schema)
+
+    def consume_contract_trus(self, contract_trus: list[ContractTRU]) -> None:
+        for contract_tru in contract_trus:
+            schema = ContractTRUSchema.model_validate(contract_tru, from_attributes=True)
+            SsContractOrm.create_from_schema(schema)
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
         pass

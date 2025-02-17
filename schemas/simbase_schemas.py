@@ -165,3 +165,50 @@ class ShiftSchema(BaseModel):
     shift_type: str | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class ContractTRUSchema(BaseModel):
+    id: int | None
+    id_sm: int | None
+    name:int | None
+    sm_state:int | None
+    date_modified: int | None
+    date_created: int | None
+
+
+class FineSchema(BaseModel):
+    id: int | None
+    id_sm: int | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    circumstances: str | None
+    violation_type: str | None
+    fine_type: str | None
+    request_amount: float | None
+    recognition_amount: float | None
+    fine_number: str | None
+    fine_date: datetime | None
+    decision: str | None
+    date_modified: datetime | None
+    date_created: datetime | None
+
+
+class LegalClaimsSchema(BaseModel):
+    id: int | None
+    id_sm: int | None
+    sm_state: str | None
+    responsible_employee_id_sm: int | None
+    contract_TRU_id_sm: int | None
+    conclusion_date: datetime | None
+    contract_number: str | None
+    applicant: str | None
+    defendant: str | None
+    case_classification: str | None
+    property_requirements: str | None
+    currency: str | None
+    non_property_claims: str | None
+    grounds_of_claim: str | None
+    result: str | None
+    dishonest_supplier: int | None
+    date_modified: datetime | None
+    date_created: datetime | None

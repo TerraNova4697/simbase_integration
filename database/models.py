@@ -3,7 +3,7 @@ from typing import Annotated
 
 from sqlalchemy import Integer, DateTime, String, SmallInteger, Numeric, Date, Boolean, Time, Double, \
     LargeBinary, Text
-from sqlalchemy.dialects.mysql import MEDIUMTEXT, BLOB
+from sqlalchemy.dialects.mysql import MEDIUMTEXT, BLOB, TINYINT
 from sqlalchemy.orm import Mapped, mapped_column
 
 from database.simbase_database import Base
@@ -607,5 +607,58 @@ class Shift(Base):
     joined_posts: Mapped[boolnull]
     shift_date: Mapped[Date] = mapped_column(Date, nullable=True)
     shift_type: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
+
+
+class ContractTRU(Base):
+    __tablename__ = 'contract_TRU'
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[intnull]
+    name: Mapped[vc255]
+    sm_state: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
+
+
+class Fine(Base):
+    __tablename__ = "fines"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[intnull]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    circumstances: Mapped[str] = mapped_column(Text, nullable=True)
+    violation_type: Mapped[vc255]
+    fine_type: Mapped[vc255]
+    request_amount: Mapped[doublenull]
+    recognition_amount: Mapped[doublenull]
+    fine_number: Mapped[vc255]
+    fine_date: Mapped[dtnull]
+    decision: Mapped[vc255]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
+
+
+class LegalClaims(Base):
+    __tablename__ = 'legal_claims'
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[id_sm_key]
+    sm_state: Mapped[vc255]
+    responsible_employee_id_sm: Mapped[intnull]
+    contract_TRU_id_sm: Mapped[intnull]
+    conclusion_date: Mapped[dtnull]
+    contract_number: Mapped[vc255]
+    applicant: Mapped[vc255]
+    defendant: Mapped[vc255]
+    case_classification: Mapped[vc255]
+    property_requirements: Mapped[vc255]
+    currency: Mapped[vc255]
+    non_property_claims: Mapped[vc255]
+    grounds_of_claim: Mapped[vc255]
+    result: Mapped[vc255]
+    dishonest_supplier: Mapped[int] = mapped_column(TINYINT, nullable=True)
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
