@@ -198,7 +198,7 @@ class LegalClaimsSchema(BaseModel):
     id_sm: int | None
     sm_state: str | None
     responsible_employee_id_sm: int | None
-    contract_tru_id_sm: int | None = Field(alial="contract_TRU_id_sm")
+    contract_tru_id_sm: int | None = Field(validation_alias="contract_TRU_id_sm")
     conclusion_date: datetime | None
     contract_number: str | None
     applicant: str | None
