@@ -23,7 +23,7 @@ class TaskRunner:
             self.fetch_triggerings,
             self.fetch_shifts,
             self.fetch_fines,
-
+            self.fetch_employees,
             self.fetch_legal_claims,
             self.fetch_contract_trus,
         ]
@@ -126,4 +126,6 @@ class TaskRunner:
 
     @try_times(number_of_tries=3)
     async def fetch_employees(self):
-        pass
+        simbase_employees = EmployeeOrm.all()
+        self.superset.consume_employees(simbase_employees)
+        logger.info("Fetched emmployees")

@@ -1,7 +1,7 @@
 from datetime import datetime, date, time
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class FilialSchema(BaseModel):
@@ -209,6 +209,40 @@ class LegalClaimsSchema(BaseModel):
     non_property_claims: str | None
     grounds_of_claim: str | None
     result: str | None
-    dishonest_supplier: int | None
+    dishonest_supplier: bool | None
+    date_modified: datetime | None
+    date_created: datetime | None
+
+
+class EmployeeSchema(BaseModel):
+    id: int | None
+    id_sm: int | None
+    employee: str | None
+    name: str | None
+    second_name: str | None
+    middle_name: str | None
+    filial_id_sm: int | None
+    job_title: str | None
+    job_type: str | None
+    subdivision: str | None
+    iin: str | None
+    personnel_number: str | None
+    gender: str | None
+    nationality: str | None
+    birth_date: date | None
+    place_of_birth: str | None
+    social_status: str | None
+    employee_type: str | None
+    type: str | None
+    position_level: str | None
+    reserved: bool | None
+    labor_union: str | None
+    nomenclature_CEO: bool | None
+    nomenclature_CA: bool | None
+    retiree: bool | None
+    member_collective_agreement: bool | None
+    wage_rate: bool | None
+    salary: bool | None
+    rating: bool | None
     date_modified: datetime | None
     date_created: datetime | None

@@ -645,7 +645,7 @@ class LegalClaims(Base):
     __tablename__ = 'legal_claims'
     
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
+    id_sm: Mapped[intnull]
     sm_state: Mapped[vc255]
     responsible_employee_id_sm: Mapped[intnull]
     contract_TRU_id_sm: Mapped[intnull]
@@ -660,5 +660,41 @@ class LegalClaims(Base):
     grounds_of_claim: Mapped[vc255]
     result: Mapped[vc255]
     dishonest_supplier: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
+
+
+class Employee(Base):
+    __tablename__ = 'employee'
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sm: Mapped[intnull]
+    employee: Mapped[vc255]
+    name: Mapped[vc255]
+    second_name: Mapped[vc255]
+    middle_name: Mapped[vc255]
+    filial_id_sm: Mapped[intnull]
+    job_title: Mapped[vc255]
+    job_type: Mapped[vc255]
+    subdivision: Mapped[vc255]
+    iin: Mapped[vc255]
+    personnel_number: Mapped[vc255]
+    gender: Mapped[vc255]
+    nationality: Mapped[vc255]
+    birth_date: Mapped[Date] = mapped_column(Date, nullable=True)
+    place_of_birth: Mapped[vc255]
+    social_status: Mapped[vc255]
+    employee_type: Mapped[vc255]
+    type: Mapped[vc255]
+    position_level: Mapped[vc255]
+    reserved: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    labor_union: Mapped[vc255]
+    nomenclature_CEO: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    nomenclature_CA: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    retiree: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    member_collective_agreement: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    wage_rate: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    salary: Mapped[int] = mapped_column(TINYINT, nullable=True)
+    rating: Mapped[int] = mapped_column(TINYINT, nullable=True)
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
