@@ -172,8 +172,8 @@ class ContractTRUSchema(BaseModel):
     id_sm: int | None
     name:int | None
     sm_state:int | None
-    date_modified: int | None
-    date_created: int | None
+    date_modified: datetime | None
+    date_created: datetime | None
 
 
 class FineSchema(BaseModel):
