@@ -51,7 +51,7 @@ class PostSchema(BaseModel):
     name: str | None
     type: str | None
     shift_mode: str | None
-    operating_mode: int | None
+    operating_mode: str | None
     linear_part: str | None
     length_from: float | None
     length_to: float | None

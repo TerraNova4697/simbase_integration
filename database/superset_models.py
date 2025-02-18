@@ -263,7 +263,7 @@ class Post(Base):
     name: Mapped[vc255]
     type: Mapped[vc255]
     shift_mode: Mapped[vc255]
-    operating_mode: Mapped[intnull]
+    operating_mode: Mapped[vc255]
     linear_part: Mapped[str] = mapped_column(Text, nullable=True)
     length_from: Mapped[doublenull]
     length_to: Mapped[doublenull]

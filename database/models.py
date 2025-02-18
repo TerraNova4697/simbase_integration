@@ -72,7 +72,7 @@ class Post(Base):
     name: Mapped[vc255]
     type: Mapped[vc255]
     shift_mode: Mapped[intnull]
-    operating_mode: Mapped[intnull]
+    operating_mode: Mapped[vc255]
     linear_part: Mapped[str] = mapped_column(MEDIUMTEXT, nullable=True)
     length_from: Mapped[doublenull]
     length_to: Mapped[doublenull]
