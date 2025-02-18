@@ -10,6 +10,7 @@ class FilialSchema(BaseModel):
     name: str | None
     latitude: float | None = None
     longitude: float | None = None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -20,6 +21,7 @@ class CustomerSchema(BaseModel):
     name: str | None
     bin: str | None
     status: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -35,6 +37,7 @@ class ObjectSchema(BaseModel):
     contract_date: date | None
     contract_number: str | None
     type: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -52,6 +55,7 @@ class PostSchema(BaseModel):
     linear_part: str | None
     length_from: float | None
     length_to: float | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -88,6 +92,7 @@ class SecurityGuardSchema(BaseModel):
     gender: str | None
     nationality: str | None
     labor_union: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -113,6 +118,7 @@ class IncomeSchema(BaseModel):
     remainder: float | None
     comment: str | None
     additional_comment: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -127,6 +133,7 @@ class ContractSchema(BaseModel):
     name: str | None
     type: str | None
     contract_number: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -148,6 +155,7 @@ class TriggeringSchema(BaseModel):
     response_time: time | None
     mg_moment_of_actuation: str | None
     trigger_date: datetime | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -163,6 +171,7 @@ class ShiftSchema(BaseModel):
     joined_posts: int | None
     shift_date: date | None
     shift_type: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -189,6 +198,7 @@ class FineSchema(BaseModel):
     fine_number: str | None
     fine_date: datetime | None
     decision: str | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
 
@@ -244,5 +254,6 @@ class EmployeeSchema(BaseModel):
     wage_rate: bool | None
     salary: bool | None
     rating: bool | None
+    sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None

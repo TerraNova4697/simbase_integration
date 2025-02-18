@@ -46,6 +46,7 @@ class Filial(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     id_sm: Mapped[id_sm_key]
     name: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -124,6 +125,7 @@ class Customer(Base):
     name: Mapped[vc255]
     bin: Mapped[vc255]
     status: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -188,6 +190,7 @@ class Contract(Base):
     name: Mapped[vc255]
     type: Mapped[vc255]
     contract_number: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -222,6 +225,7 @@ class Object(Base):
     contract_number: Mapped[vc255]
     type: Mapped[vc255]
     category: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -263,6 +267,7 @@ class Post(Base):
     linear_part: Mapped[str] = mapped_column(Text, nullable=True)
     length_from: Mapped[doublenull]
     length_to: Mapped[doublenull]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -344,6 +349,7 @@ class SecurityGuard(Base):
     gender: Mapped[vc255]
     nationality: Mapped[vc255]
     labor_union: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -384,6 +390,7 @@ class Income(Base):
     remainder: Mapped[doublenull]
     comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
     additional_comment: Mapped[str] = mapped_column(String(length=255), nullable=True)
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -423,6 +430,7 @@ class Employee(Base):
     wage_rate: Mapped[boolnull]
     salary: Mapped[boolnull]
     rating: Mapped[boolnull]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -495,6 +503,7 @@ class Fine(Base):
     fine_number: Mapped[vc255]
     fine_date: Mapped[dtnull]
     decision: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -523,6 +532,7 @@ class Triggering(Base):
     response_time: Mapped[time] = mapped_column(Time, nullable=True)
     mg_moment_of_actuation: Mapped[vc255]
     trigger_date: Mapped[dtnull]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
@@ -580,6 +590,7 @@ class Shift(Base):
     joined_posts: Mapped[boolnull]
     shift_date: Mapped[date] = mapped_column(Date, nullable=True)
     shift_type: Mapped[vc255]
+    sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 
