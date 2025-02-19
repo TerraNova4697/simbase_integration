@@ -469,7 +469,7 @@ class LegalClaims(Base):
     contract_tru: Mapped['ContractTRU'] = relationship(back_populates="legal_claims")
 
     sm_state: Mapped[vc255]
-    conclusion_date: Mapped[dtnull]
+    conclusion_date: Mapped[date] = mapped_column(Date, nullable=True)
     contract_number: Mapped[vc255]
     applicant: Mapped[vc255]
     defendant: Mapped[vc255]
@@ -501,7 +501,7 @@ class Fine(Base):
     request_amount: Mapped[doublenull]
     recognition_amount: Mapped[doublenull]
     fine_number: Mapped[vc255]
-    fine_date: Mapped[dtnull]
+    fine_date: Mapped[date] = mapped_column(Date, nullable=True)
     decision: Mapped[vc255]
     sm_state: Mapped[vc255]
     date_modified: Mapped[dtnull]
