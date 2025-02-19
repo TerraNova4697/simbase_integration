@@ -196,7 +196,7 @@ class FineSchema(BaseModel):
     request_amount: float | None
     recognition_amount: float | None
     fine_number: str | None
-    fine_date: datetime | None
+    fine_date: date | None
     decision: str | None
     sm_state: str | None
     date_modified: datetime | None
@@ -209,7 +209,7 @@ class LegalClaimsSchema(BaseModel):
     sm_state: str | None
     responsible_employee_id_sm: int | None
     contract_tru_id_sm: int | None = Field(validation_alias="contract_TRU_id_sm")
-    conclusion_date: datetime | None
+    conclusion_date: date | None
     contract_number: str | None
     applicant: str | None
     defendant: str | None
