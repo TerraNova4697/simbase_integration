@@ -384,18 +384,21 @@ class MobileGroupComposition(Base):
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
-class MotorTransport(Base):
-    __tablename__ = "motor_transport"
+class Transport(Base):
+    __tablename__ = "transports"
 
-    i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    motor_transport: Mapped[int] = mapped_column(Integer, nullable=True)
-    additional_sites: Mapped[int] = mapped_column(Integer, nullable=True)
-    gps: Mapped[int] = mapped_column(Integer, nullable=True)
-    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sm_state: Mapped[vc255]
+
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+
+    transport_quantity: Mapped[smallintnull]
+    additional_necessary_transport_quantity: Mapped[smallintnull]
+    GPS: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Offense(Base):

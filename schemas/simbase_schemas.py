@@ -257,3 +257,16 @@ class EmployeeSchema(BaseModel):
     sm_state: str | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class TransportSchema(BaseModel):
+    id: int
+    sm_state: str | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    post_id_sm: int | None
+    transport_quantity: int | None
+    additional_necessary_transport_quantity: int | None
+    GPS: int | None
+    date_modified: datetime | None
+    date_created: datetime | None

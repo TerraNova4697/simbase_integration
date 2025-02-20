@@ -13,6 +13,7 @@ from database.queries import (
     SsLegalClaimsOrm,
     SsEmployeeOrm,
     SsContractTRUOrm,
+    SsTransportOrm
 )
 from schemas.simbase_schemas import *
 
@@ -86,6 +87,11 @@ class Superset:
         for employee in employees:
             schema = EmployeeSchema.model_validate(employee, from_attributes=True)
             SsEmployeeOrm.create_from_schema(schema)
+
+    def consume_transports(self, transports: list[Transport]) -> None:
+        for transport in transports:
+            schema = TransportSchema.model_validate(transport, from_attributes=True)
+            SsTransportOrm.create_from_schema(schema)
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
         pass

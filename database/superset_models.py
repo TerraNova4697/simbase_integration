@@ -621,7 +621,7 @@ class Transport(Base):
     __tablename__ = "transports"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
+    sm_state: Mapped[vc255]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="transports")
@@ -630,8 +630,8 @@ class Transport(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="transports")
 
-    transport_quant: Mapped[smallintnull]
-    additional_necessary_transport_quant: Mapped[smallintnull]
+    transport_quantity: Mapped[smallintnull]
+    additional_necessary_transport_quantity: Mapped[smallintnull]
     GPS: Mapped[smallintnull]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
