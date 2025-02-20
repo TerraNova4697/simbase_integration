@@ -26,6 +26,7 @@ class TaskRunner:
             self.fetch_employees,
             self.fetch_contract_trus,
             self.fetch_legal_claims,
+            self.fetch_transports,
         ]
 
     async def run_tasks(self):
@@ -129,3 +130,10 @@ class TaskRunner:
         simbase_employees = EmployeeOrm.all()
         self.superset.consume_employees(simbase_employees)
         logger.info("Fetched emmployees")
+
+
+    @try_times(number_of_tries=3)
+    async def fetch_transports(self):
+        simbase_transports = TransportOrm.all()
+        self.superset.consume_transports(simbase_transports)
+        logger.info("Fetched transports")
