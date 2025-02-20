@@ -27,6 +27,7 @@ class TaskRunner:
             self.fetch_contract_trus,
             self.fetch_legal_claims,
             self.fetch_transports,
+            self.fetch_training_and_medical_services,
         ]
 
     async def run_tasks(self):
@@ -137,3 +138,10 @@ class TaskRunner:
         simbase_transports = TransportOrm.all()
         self.superset.consume_transports(simbase_transports)
         logger.info("Fetched transports")
+
+
+    @try_times(number_of_tries=3)
+    async def fetch_training_and_medical_services(self):
+        simbase_training_and_medical_services = TrainingAndMedicalServiceOrm.all()
+        self.superset.consume_training_and_medical_services(simbase_training_and_medical_services)
+        logger.info("Fetched training and medical services")

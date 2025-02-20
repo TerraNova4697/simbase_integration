@@ -270,3 +270,18 @@ class TransportSchema(BaseModel):
     GPS: int | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class TrainingAndMedicalServiceSchema(BaseModel):
+    id: int | None
+    sm_state: str | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    post_id_sm: int | None
+    annual_retraining_of_security_guards_quantity: int | None
+    anti_terrorism_training_quantity: int | None
+    annual_medical_examination_quantity: int | None
+    annual_medical_examination_quantity: int | None
+    pre_shift_medical_examination_quantity: int | None
+    date_modified: datetime | None
+    date_created: datetime | None

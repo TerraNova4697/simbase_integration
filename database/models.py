@@ -551,20 +551,23 @@ class StaffTurnover(Base):
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
-class TrainingAndMedicalServices(Base):
-    __tablename__ = "training_and_medical_services"
+class TrainingAndMedicalService(Base):
+    __tablename__ = 'training_and_medical_services'
 
-    i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    annual_retraining_of_security_guards: Mapped[int] = mapped_column(Integer, nullable=True)
-    anti_terrorism_training: Mapped[int] = mapped_column(Integer, nullable=True)
-    fire_technical_minimum: Mapped[int] = mapped_column(Integer, nullable=True)
-    annual_medical_examination: Mapped[int] = mapped_column(Integer, nullable=True)
-    pre_shift_medical_examination: Mapped[int] = mapped_column(Integer, nullable=True)
-    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sm_state: Mapped[vc255]
+
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+
+    annual_retraining_of_security_guards_quantity: Mapped[smallintnull]
+    anti_terrorism_training_quantity: Mapped[smallintnull]
+    annual_medical_examination_quantity: Mapped[smallintnull]
+    annual_medical_examination_quantity: Mapped[smallintnull]
+    pre_shift_medical_examination_quantity: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Weapons(Base):

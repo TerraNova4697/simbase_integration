@@ -599,7 +599,7 @@ class TrainingAndMedicalService(Base):
     __tablename__ = 'training_and_medical_services'
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
+    sm_state: Mapped[vc255]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="training_and_medical_services")
@@ -608,11 +608,11 @@ class TrainingAndMedicalService(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="training_and_medical_services")
 
-    annual_retraining_of_security_guards_quant: Mapped[smallintnull]
-    anti_terrorism_training_quant: Mapped[smallintnull]
-    fire_technical_minimum_quant: Mapped[smallintnull]
-    annual_medical_examination_quant: Mapped[smallintnull]
-    pre_shift_medical_examination_quant: Mapped[smallintnull]
+    annual_retraining_of_security_guards_quantity: Mapped[smallintnull]
+    anti_terrorism_training_quantity: Mapped[smallintnull]
+    annual_medical_examination_quantity: Mapped[smallintnull]
+    annual_medical_examination_quantity: Mapped[smallintnull]
+    pre_shift_medical_examination_quantity: Mapped[smallintnull]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 

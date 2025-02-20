@@ -15,3 +15,4 @@ from .fines_orm import FineOrm, SsFineOrm
 from .legal_claims_orm import LegalClaimsOrm, SsLegalClaimsOrm
 from .employee_orm import EmployeeOrm, SsEmployeeOrm
 from .transport_orm import TransportOrm, SsTransportOrm
+from .training_and_medical_service_orm import TrainingAndMedicalServiceOrm, SsTrainingAndMedicalServiceOrm
