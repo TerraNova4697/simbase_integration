@@ -59,6 +59,13 @@ class PostSchema(BaseModel):
     date_modified: datetime | None
     date_created: datetime | None
 
+    @field_validator("type", mode="before")
+    @classmethod
+    def rename_type(cls, value):
+        if value == "Группа быстрого реагирования":
+            return "Мобильная группа"
+        return value
+
 
 class MobGroupSchema(BaseModel):
     i_id: int | None
