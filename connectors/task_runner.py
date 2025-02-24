@@ -29,6 +29,8 @@ class TaskRunner:
             self.fetch_transports,
             self.fetch_training_and_medical_services,
             self.fetch_journals,
+            self.fetch_communication_facilities,
+            self.fetch_providing_workwears,
         ]
 
     async def run_tasks(self):
@@ -156,3 +158,9 @@ class TaskRunner:
         simbase_comm_facils = CommunicationFacilitiyOrm.all()
         self.superset.consume_communication_facilities(simbase_comm_facils)
         logger.info("Fetched communication facilities")
+
+    @try_times(number_of_tries=3)
+    async def fetch_providing_workwears(self):
+        simbase_prov_wws = ProvidingWorkwearsOrm.all()
+        self.superset.consume_providing_workwears(simbase_prov_wws)
+        logger.info("Fetched providing workwears")

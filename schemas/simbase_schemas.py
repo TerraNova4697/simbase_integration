@@ -324,3 +324,18 @@ class CommunicationFacilitiySchema(BaseModel):
     stationary_radios_quantity: int | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class ProvidingWorkwearsSchema(BaseModel):
+    id: int | None
+    sm_state: str | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    post_id_sm: int | None
+    summer_set: int | None
+    winter_set: int | None
+    reflective_vets: int | None
+    summer_shoes: int | None
+    winter_shoes: int | None
+    date_modified: datetime | None
+    date_created: datetime | None

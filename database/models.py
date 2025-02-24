@@ -446,17 +446,21 @@ class Offense(Base):
     status: Mapped[str] = mapped_column(Text, nullable=True)
 
 
-class ProvidingWorkWear(Base):
-    __tablename__ = "providing_workwear"
+class ProvidingWorkwears(Base):
+    __tablename__ = "providing_workwears"
 
-    i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    motor_transport: Mapped[int] = mapped_column(Integer, nullable=True)
-    gps: Mapped[int] = mapped_column(Integer, nullable=True)
-    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sm_state: Mapped[vc255]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+    summer_set: Mapped[smallintnull]
+    winter_set: Mapped[smallintnull]
+    reflective_vets: Mapped[smallintnull]
+    summer_shoes: Mapped[smallintnull]
+    winter_shoes: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class RequirementRequest(Base):
