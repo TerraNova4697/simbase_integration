@@ -14,7 +14,8 @@ from database.queries import (
     SsEmployeeOrm,
     SsContractTRUOrm,
     SsTransportOrm, 
-    SsTrainingAndMedicalServiceOrm
+    SsTrainingAndMedicalServiceOrm,
+    SsJournalOrm,
 )
 from schemas.simbase_schemas import *
 
@@ -98,6 +99,11 @@ class Superset:
         for tans in training_and_medical_services:
             schema = TrainingAndMedicalServiceSchema.model_validate(tans, from_attributes=True)
             SsTrainingAndMedicalServiceOrm.create_from_schema(schema)
+
+    def consume_journals(self, journals: list[Journal]) -> None:
+        for journal in journals:
+            schema = JournalSchema.model_validate(journal, from_attributes=True)
+            SsJournalOrm.create_from_schema(schema)
 
     def consume_route_sheet(self, route_sheet: list[RouteSheet]) -> None:
         pass

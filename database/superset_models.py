@@ -641,7 +641,7 @@ class Journal(Base):
     __tablename__ = "journals"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
+    sm_state: Mapped[vc255]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="journals")
@@ -650,13 +650,15 @@ class Journal(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="journals")
 
-    log_of_accept_and_transf_of_weapon_and_ammunition: Mapped[boolnull]
-    finery_journal: Mapped[boolnull]
-    log_of_inc_info_and_recor_of_activation_of_tech_sec_means: Mapped[boolnull]
-    import_export_log_and_contrib_removals_of_inventory_items: Mapped[boolnull]
-    acceptance_log_for_premises_delivery: Mapped[boolnull]
-    visitor_log: Mapped[boolnull]
-    vehicle_registration_log: Mapped[boolnull]
+    journal_transfer_of_weapons_and_ammunition: Mapped[boolnull]
+    journal_finery: Mapped[boolnull]
+    journal_aboard: Mapped[boolnull]
+    journal_list_of_way: Mapped[boolnull]
+    journal_information_and_recording: Mapped[boolnull]
+    journal_transfers_of_inventory_items: Mapped[boolnull]
+    journal_acceptance_log_for_premises_delivery: Mapped[boolnull]
+    journal_visitors: Mapped[boolnull]
+    journal_vehicle_registration: Mapped[boolnull]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 

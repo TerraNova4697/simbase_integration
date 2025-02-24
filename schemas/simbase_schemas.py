@@ -292,3 +292,22 @@ class TrainingAndMedicalServiceSchema(BaseModel):
     pre_shift_medical_examination_quantity: int | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class JournalSchema(BaseModel):
+    id: int | None
+    sm_state: str | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    post_id_sm: int | None
+    journal_transfer_of_weapons_and_ammunition: bool | None
+    journal_finery: bool | None
+    journal_aboard: bool | None
+    journal_list_of_way: bool | None
+    journal_information_and_recording: bool | None
+    journal_transfers_of_inventory_items: bool | None
+    journal_acceptance_log_for_premises_delivery: bool | None
+    journal_visitors: bool | None
+    journal_vehicle_registration: bool | None
+    date_modified: datetime | None
+    date_created: datetime | None

@@ -352,21 +352,24 @@ class IssuanceOfOsTmz(Base):
 
 
 class Journal(Base):
-    __tablename__ = "journal"
+    __tablename__ = "journals"
 
-    i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    log_of_acceptance: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    finery_journal: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    log_if_incoming: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    import_export_logbook: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    acceptance_log_for_premises_delivery: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    visitor_log: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    vehicle_registration_log: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sm_state: Mapped[vc255]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+    journal_transfer_of_weapons_and_ammunition: Mapped[boolnull]
+    journal_finery: Mapped[boolnull]
+    journal_aboard: Mapped[boolnull]
+    journal_list_of_way: Mapped[boolnull]
+    journal_information_and_recording: Mapped[boolnull]
+    journal_transfers_of_inventory_items: Mapped[boolnull]
+    journal_acceptance_log_for_premises_delivery: Mapped[boolnull]
+    journal_visitors: Mapped[boolnull]
+    journal_vehicle_registration: Mapped[boolnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class MobileGroupComposition(Base):
