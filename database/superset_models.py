@@ -689,7 +689,7 @@ class CommunicationFacilitiy(Base):
     __tablename__ = "communication_facilities"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
+    sm_state: Mapped[vc255]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="communication_facilities")
@@ -698,9 +698,9 @@ class CommunicationFacilitiy(Base):
     post_id_sm: Mapped[int] = mapped_column(ForeignKey("posts.id_sm", ondelete="NO ACTION"), nullable=True)
     post: Mapped["Post"] = relationship(back_populates="communication_facilities")
 
-    wearable_radios_quant: Mapped[smallintnull]
-    сar_radios_quant: Mapped[smallintnull]
-    stationary_radios_quant: Mapped[smallintnull]
+    wearable_radios_quantity: Mapped[smallintnull]
+    сar_radios_quantity: Mapped[smallintnull]
+    stationary_radios_quantity: Mapped[smallintnull]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]
 

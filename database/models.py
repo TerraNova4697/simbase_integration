@@ -204,6 +204,21 @@ class CommunicationMeans(Base):
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
+class CommunicationFacilitiy(Base):
+    __tablename__ = "communication_facilities"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sm_state: Mapped[vc255]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+    wearable_radios_quantity: Mapped[smallintnull]
+    сar_radios_quantity: Mapped[smallintnull]
+    stationary_radios_quantity: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
+
+
 class Driver(Base):
     __tablename__ = 'drivers'
 

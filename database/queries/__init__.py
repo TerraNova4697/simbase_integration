@@ -17,3 +17,4 @@ from .employee_orm import EmployeeOrm, SsEmployeeOrm
 from .transport_orm import TransportOrm, SsTransportOrm
 from .training_and_medical_service_orm import TrainingAndMedicalServiceOrm, SsTrainingAndMedicalServiceOrm
 from .journal_orm import JournalOrm, SsJournalOrm
+from .comm_facil_orm import CommunicationFacilitiyOrm, SsCommunicationFacilitiyOrm

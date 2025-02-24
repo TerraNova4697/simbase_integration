@@ -311,3 +311,16 @@ class JournalSchema(BaseModel):
     journal_vehicle_registration: bool | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class CommunicationFacilitiySchema(BaseModel):
+    id: int | None
+    sm_state: str | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    post_id_sm: int | None
+    wearable_radios_quantity: int | None
+    сar_radios_quantity: int | None
+    stationary_radios_quantity: int | None
+    date_modified: datetime | None
+    date_created: datetime | None

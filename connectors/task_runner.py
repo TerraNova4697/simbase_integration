@@ -150,3 +150,9 @@ class TaskRunner:
         simbase_journals = JournalOrm.all()
         self.superset.consume_journals(simbase_journals)
         logger.info("Fetched journals")
+
+    @try_times(number_of_tries=3)
+    async def fetch_communication_facilities(self):
+        simbase_comm_facils = CommunicationFacilitiyOrm.all()
+        self.superset.consume_communication_facilities(simbase_comm_facils)
+        logger.info("Fetched communication facilities")
