@@ -19,3 +19,4 @@ from .training_and_medical_service_orm import TrainingAndMedicalServiceOrm, SsTr
 from .journal_orm import JournalOrm, SsJournalOrm
 from .comm_facil_orm import CommunicationFacilitiyOrm, SsCommunicationFacilitiyOrm
 from .providing_workwears_orm import ProvidingWorkwearsOrm, SsProvidingWorkwearsOrm
+from .weapons_and_special_equipments_orm import WeaponAndSpecEquipmentOrm, SsWeaponAndSpecEquipmentOrm

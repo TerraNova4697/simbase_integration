@@ -709,7 +709,7 @@ class WeaponAndSpecEquipment(Base):
     __tablename__ = "weapons_and_special_equipments"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sm: Mapped[id_sm_key]
+    sm_state: Mapped[vc255]
 
     filial_id_sm: Mapped[int] = mapped_column(ForeignKey("filials.id_sm", ondelete="NO ACTION"), nullable=True)
     filial: Mapped["Filial"] = relationship(back_populates="weapons_and_special_equipments")
@@ -720,7 +720,7 @@ class WeaponAndSpecEquipment(Base):
 
     firearms: Mapped[smallintnull]
     handcuffs: Mapped[smallintnull]
-    PR73: Mapped[smallintnull]
+    pr_73: Mapped[smallintnull]
     regulatory: Mapped[smallintnull]
     electric_lantern: Mapped[smallintnull]
     headlight_finder: Mapped[smallintnull]
@@ -729,7 +729,7 @@ class WeaponAndSpecEquipment(Base):
     binoculars: Mapped[smallintnull]
     safe_for_storing_weapons: Mapped[smallintnull]
     wearable_video_recorders: Mapped[smallintnull]
-    car_DVRs: Mapped[smallintnull]
+    car_dvrs: Mapped[smallintnull]
     cell_phones: Mapped[smallintnull]
     date_modified: Mapped[dtnull]
     date_created: Mapped[dtnull]

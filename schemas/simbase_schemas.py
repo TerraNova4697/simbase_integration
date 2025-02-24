@@ -339,3 +339,26 @@ class ProvidingWorkwearsSchema(BaseModel):
     winter_shoes: int | None
     date_modified: datetime | None
     date_created: datetime | None
+
+
+class WeaponAndSpecEquipmentSchema(BaseModel):
+    id: int | None
+    sm_state: str | None
+    filial_id_sm: int | None
+    customer_id_sm: int | None
+    post_id_sm: int | None
+    firearms: int | None
+    handcuffs: int | None
+    pr_73: int | None = Field(validation_alias="PR_73")
+    regulatory: int | None
+    electric_lantern: int | None
+    headlight_finder: int | None
+    inspection_mirror: int | None
+    detectors_and_metal_detectors: int | None
+    binoculars: int | None
+    safe_for_storing_weapons: int | None
+    wearable_video_recorders: int | None
+    car_dvrs: int | None = Field(validation_alias="car_DVRs")
+    cell_phones: int | None
+    date_modified: datetime | None
+    date_created: datetime | None

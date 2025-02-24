@@ -164,3 +164,9 @@ class TaskRunner:
         simbase_prov_wws = ProvidingWorkwearsOrm.all()
         self.superset.consume_providing_workwears(simbase_prov_wws)
         logger.info("Fetched providing workwears")
+
+    @try_times(number_of_tries=3)
+    async def fetch_weapons_and_special_equipments(self):
+        simbase_weap_spec_equips = SsWeaponAndSpecEquipmentOrm.all()
+        self.superset.consume_weapons_and_special_equipment(simbase_weap_spec_equips)
+        logger.info("Fetched weapons and special equipments")

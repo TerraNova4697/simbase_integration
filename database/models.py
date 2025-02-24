@@ -606,28 +606,29 @@ class Weapons(Base):
     date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
 
 
-class WeaponsAndSpecialEquipment(Base):
-    __tablename__ = "weapons_and_special_quipment"
+class WeaponAndSpecEquipment(Base):
+    __tablename__ = "weapons_and_special_equipments"
 
-    i_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    id_sb_object_filial: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_zakazchik: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_mob_group: Mapped[int] = mapped_column(Integer, nullable=True)
-    id_sb_object_post: Mapped[int] = mapped_column(Integer, nullable=True)
-    firearms: Mapped[int] = mapped_column(Integer, nullable=True)
-    handcuffs: Mapped[int] = mapped_column(Integer, nullable=True)
-    pr_73: Mapped[int] = mapped_column(Integer, nullable=True)
-    regulatory: Mapped[int] = mapped_column(Integer, nullable=True)
-    electric_lantern: Mapped[int] = mapped_column(Integer, nullable=True)
-    headlight_finder: Mapped[int] = mapped_column(Integer, nullable=True)
-    inspection_mirror: Mapped[int] = mapped_column(Integer, nullable=True)
-    metal_detectors: Mapped[int] = mapped_column(Integer, nullable=True)
-    binoculars: Mapped[int] = mapped_column(Integer, nullable=True)
-    safe: Mapped[int] = mapped_column(Integer, nullable=True)
-    wearable_video_recorders: Mapped[int] = mapped_column(Integer, nullable=True)
-    car_dvr: Mapped[int] = mapped_column(Integer, nullable=True)
-    cell_phones: Mapped[int] = mapped_column(Integer, nullable=True)
-    date: Mapped[datetime] = mapped_column(DateTime, nullable=True)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    sm_state: Mapped[vc255]
+    filial_id_sm: Mapped[intnull]
+    customer_id_sm: Mapped[intnull]
+    post_id_sm: Mapped[intnull]
+    firearms: Mapped[smallintnull]
+    handcuffs: Mapped[smallintnull]
+    PR_73: Mapped[smallintnull]
+    regulatory: Mapped[smallintnull]
+    electric_lantern: Mapped[smallintnull]
+    headlight_finder: Mapped[smallintnull]
+    inspection_mirror: Mapped[smallintnull]
+    detectors_and_metal_detectors: Mapped[smallintnull]
+    binoculars: Mapped[smallintnull]
+    safe_for_storing_weapons: Mapped[smallintnull]
+    wearable_video_recorders: Mapped[smallintnull]
+    car_DVRs: Mapped[smallintnull]
+    cell_phones: Mapped[smallintnull]
+    date_modified: Mapped[dtnull]
+    date_created: Mapped[dtnull]
 
 
 class Shift(Base):
