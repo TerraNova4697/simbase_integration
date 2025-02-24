@@ -31,6 +31,7 @@ class TaskRunner:
             self.fetch_journals,
             self.fetch_communication_facilities,
             self.fetch_providing_workwears,
+            self.fetch_weapons_and_special_equipments,
         ]
 
     async def run_tasks(self):
@@ -167,6 +168,6 @@ class TaskRunner:
 
     @try_times(number_of_tries=3)
     async def fetch_weapons_and_special_equipments(self):
-        simbase_weap_spec_equips = SsWeaponAndSpecEquipmentOrm.all()
+        simbase_weap_spec_equips = WeaponAndSpecEquipmentOrm.all()
         self.superset.consume_weapons_and_special_equipment(simbase_weap_spec_equips)
         logger.info("Fetched weapons and special equipments")
